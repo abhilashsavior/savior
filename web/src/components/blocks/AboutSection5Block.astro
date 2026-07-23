@@ -1,0 +1,52 @@
+---
+import Img from '@/components/Img.astro'
+import Link from '@/components/Link.astro'
+import type { AboutSection5Block as AboutSection5BlockType, Media, Page } from 'cms/src/payload-types'
+
+type Props = AboutSection5BlockType
+
+const { backgroundImage, heading, boldHeading, description, primaryCta } = Astro.props
+
+const ctaLink = primaryCta?.externalUrl || ((primaryCta?.link as Page)?.path ?? '#')
+---
+
+<section class="w-full bg-white relative overflow-hidden">
+  <div class="grid grid-cols-1 lg:grid-cols-2 min-h-[500px] lg:min-h-[643px]">
+    {(backgroundImage && typeof backgroundImage === 'object' && backgroundImage?.filename) && (
+      <div class="relative h-[400px] lg:h-full overflow-hidden">
+        <Img
+          image={backgroundImage as Media}
+          size="lg"
+          class="absolute inset-0 w-full h-full object-cover"
+          loading="lazy"
+        />
+      </div>
+    )}
+
+    <div class="bg-[#f9f9f9] flex flex-col justify-center px-6 py-12 lg:px-16 lg:py-20 xl:px-20">
+      <div class="max-w-[531px]">
+        <h2
+          class="text-[28px] sm:text-[40px] lg:text-[55px] font-heading font-normal leading-[1.22] text-black mb-8"
+        >
+          {heading}
+          {boldHeading && <span class="font-semibold"> {boldHeading}</span>}
+        </h2>
+
+        {description && (
+          <p class="font-body text-lg leading-[30px] text-[#606060] mb-12">
+            {description}
+          </p>
+        )}
+
+        {primaryCta?.label && (
+          <Link
+            path={ctaLink}
+            class="get-free-consult-btn"
+          >
+            {primaryCta.label}
+          </Link>
+        )}
+      </div>
+    </div>
+  </div>
+</section>

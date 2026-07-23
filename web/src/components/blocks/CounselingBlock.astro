@@ -1,0 +1,116 @@
+---
+import { CMS_URL } from 'astro:env/client'
+import Img from '@/components/Img.astro'
+import Link from '@/components/Link.astro'
+import type { CounselingBlock as CounselingBlockType, Media } from 'cms/src/payload-types'
+
+type Props = CounselingBlockType
+
+const { heading, subheading, backgroundImage, testimonialCard, caseStudy } = Astro.props
+
+const resolveUrl = (media: unknown): string => {
+  if (media && typeof media === 'object' && 'url' in media) {
+    const url = (media as { url?: string }).url
+    if (typeof url === 'string' && url.length > 0) {
+      return url.startsWith('/') ? `${CMS_URL}${url}` : url
+    }
+  }
+  return ''
+}
+
+const backgroundUrl = resolveUrl(backgroundImage)
+---
+
+<section class="relative isolate w-full overflow-hidden bg-white">
+  <div class="mx-auto max-w-[1795px]">
+    <div class="grid lg:grid-cols-[948px_1fr]">
+<div class="relative min-h-[400px] lg:min-h-[787px]">
+         {backgroundImage && typeof backgroundImage === 'object' && backgroundImage?.filename && (
+           <Img
+             image={backgroundImage as Media}
+             size="lg"
+             class="h-full w-full object-cover"
+             loading="eager"
+           />
+         )}
+         {!backgroundImage && backgroundUrl && (
+          <img
+            src={backgroundUrl}
+            alt=""
+            class="h-full w-full object-cover"
+            loading="eager"
+            aria-hidden="true"
+          />
+        )}
+
+        {testimonialCard && (
+          <div class="absolute max-w-[448px] bg-white shadow-lg lg:right-[51px] lg:bottom-[143px]">
+            <div class="p-8 sm:p-10 lg:p-12">
+              <div class="relative">
+                <p class="text-base leading-7 text-[#606060]">
+                  {testimonialCard.text}
+                </p>
+                {testimonialCard.author && (
+                  <p class="mt-4 text-base font-bold leading-7 text-black">
+                    &mdash; {testimonialCard.author}
+                  </p>
+                )}
+              </div>
+              <div class="absolute bottom-12 right-12 hidden sm:block">
+                <svg width="87" height="87" viewBox="0 0 87 87" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M72.5 43.5H62.7895C62.7895 33.1579 54.3421 24.7105 44 24.7105V14.5C59.9789 14.5 72.5 27.0211 72.5 43.5Z" fill="#E8E8E8"/>
+                  <path d="M43.5 43.5H33.7895C33.7895 33.1579 25.3421 24.7105 15 24.7105V14.5C30.9789 14.5 43.5 27.0211 43.5 43.5Z" fill="#E8E8E8"/>
+                </svg>
+              </div>
+              <div class="mt-6 flex gap-4">
+                <span class="block h-px w-[69px] bg-[#EF4924]"></span>
+                <span class="block h-px w-[115px] bg-gray-200"></span>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div class="flex flex-col justify-center px-6 py-10 sm:px-12 sm:py-14 lg:px-16 xl:px-20">
+        <h2 class="font-heading text-[28px] leading-[1.22] text-black sm:text-[40px] lg:text-[55px]">
+          <span class="font-normal">{heading}</span>{subheading && <span class="font-semibold"> {subheading}</span>}
+        </h2>
+
+        {caseStudy && (
+          <>
+            <div class="mt-6 h-px w-full max-w-[626px] bg-black/15"></div>
+
+            {caseStudy.label && (
+              <div>
+                <p class="mt-6 font-body text-[18px] font-semibold uppercase leading-8 text-black">
+                  {caseStudy.label}
+                </p>
+                <div class="mt-3 h-px w-full max-w-[626px] bg-black/15"></div>
+              </div>
+            )}
+
+            {caseStudy.description && (
+              <p class="mt-6 max-w-[624px] font-body text-base leading-8 text-[#606060] sm:text-[18px]">
+                {caseStudy.description}
+              </p>
+            )}
+
+            {caseStudy.ctaButton?.label && (
+              <a
+                href={caseStudy.ctaButton.link}
+                class="mt-8 inline-flex w-fit items-center gap-3 text-sm font-semibold uppercase tracking-[0.25em] text-black transition hover:text-primary"
+              >
+                <span class="flex size-[38px] rotate-[42deg] items-center justify-center">
+                  <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2 13.5H25M25 13.5L13.5 2M25 13.5L13.5 25" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                <span>{caseStudy.ctaButton.label}</span>
+              </a>
+            )}
+          </>
+        )}
+      </div>
+    </div>
+  </div>
+</section>

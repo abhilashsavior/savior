@@ -1,0 +1,56 @@
+---
+import Img from '@/components/Img.astro'
+import Link from '@/components/Link.astro'
+import type { CtaBlock as CtaBlockType, Media, Page } from 'cms/src/payload-types'
+
+type Props = CtaBlockType
+
+const { image, heading, subtext, ctaButton } = Astro.props
+
+const ctaLink = ctaButton?.externalUrl || ((ctaButton?.link as Page)?.path ?? '#')
+---
+
+<section class="w-full bg-white">
+  <div class="grid grid-cols-1 lg:grid-cols-2 min-h-[600px] lg:min-h-[925px]">
+    {(image && typeof image === 'object' && image?.filename) && (
+      <div class="relative h-[400px] lg:h-full overflow-hidden">
+        <Img
+          image={image as Media}
+          size="lg"
+          class="absolute inset-0 w-full h-full object-cover"
+          loading="lazy"
+        />
+      </div>
+    )}
+
+    {/* Right side - Content */}
+    <div class="flex flex-col justify-center px-6 py-12 lg:px-16 lg:py-20 xl:px-24">
+      <div class="max-w-[516px]">
+        {/* Heading */}
+        <h2
+          class="text-3xl font-semibold leading-tight text-slate-900 sm:text-4xl lg:text-[55px] lg:leading-[1.21] mb-6.5"
+          style="font-family: var(--font-heading, inherit)"
+        >
+          {heading}
+        </h2>
+
+        {/* Subtext */}
+        {subtext && (
+          <p class="font-body text-lg text-[#606060] mb-6.5">
+            {subtext}
+          </p>
+        )}
+
+        {/* CTA Button */}
+        {ctaButton?.label && (
+          <Link
+            path={ctaLink}
+            class="get-free-consult-btn hero-btn"
+          >
+            {ctaButton.label}
+          </Link>
+        )}
+      </div>
+    </div>
+  </div>
+</section>

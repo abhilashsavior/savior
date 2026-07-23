@@ -1,0 +1,282 @@
+---
+import { defaultLocale } from '@/cms/locales'
+import { websiteConfig } from '@/config'
+
+import type { Media, Page, SeoMetadata } from 'cms/src/payload-types'
+import Link from '../components/Link.astro'
+import ServicesDropdown from '../components/ServicesDropdown.astro'
+import { normalizePath } from '../utils/normalizePath'
+import Img from '../components/Img.astro'
+import { Phone, User } from 'lucide-astro'
+
+type Props = {
+  alternatePaths: SeoMetadata['alternatePaths']
+}
+
+const { alternatePaths } = Astro.props
+const { locale, preview, labels, header } = Astro.locals.globalState
+
+const currentPath = Astro.url.pathname
+
+// NOTE: when the 404 page is rendered, the locale might be undefined, therefore fallback to default locale
+const homePagePath = normalizePath(`/${locale ?? defaultLocale}`, preview)
+---
+
+<header
+  class:list={['fixed z-40 w-full transition-all duration-300 px-4 py-5 md:px-12 flex items-center justify-between gap-[268px] header-transparent']}
+  id="header"
+>
+  {/* Logo Section */}
+  <a href={homePagePath} class="flex items-center gap-2 group">
+{header.logo && typeof header.logo === 'object' && header.logo?.filename && header.logo?.mimeType?.startsWith('image/') ? (
+       <Img
+         image={header.logo as Media}
+         class="brightness-0 invert transition-all group-[.header-scrolled]:brightness-100 group-[.header-scrolled]:invert-0"
+       />
+     ) : (
+        <span class="text-2xl font-black tracking-tighter text-white group-[.header-scrolled]:text-slate-900 transition-colors uppercase">
+            {websiteConfig.name}
+        </span>
+    )}
+  </a>
+
+{/* Desktop Navigation - Center */}
+  <nav class="hidden lg:block">
+    <ul class="flex items-center gap-9 list-none m-0 p-0">
+      {
+        header.links?.map((link) => (
+          <li class="relative group">
+            <Link 
+                path={(link.page as Page)?.path} 
+                class="p-0! font-body text-sm font-semibold uppercase text-white group-[.header-scrolled]:text-[#ff4d1c] hover:text-primary! transition-colors"
+                aria-expanded={link.enableDropdown ? 'false' : undefined}
+                data-dropdown={link.enableDropdown ? 'true' : undefined}
+            >
+              {link.label}
+            </Link>
+            {(link.page as Page)?.path &&
+              currentPath === normalizePath((link.page as Page).path, preview) && (
+                <span class="absolute -bottom-1 left-0 w-full h-px bg-primary rounded-full" />
+            )}
+            <span class="absolute -bottom-1 left-0 w-0 h-px bg-primary rounded-full transition-all group-hover:w-full" />
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+
+  {/** Dropdowns - positioned fixed for full viewport width */}
+  {
+    header.links?.map((link) => (
+      link.enableDropdown && link.dropdown && (
+        <ServicesDropdown
+          services={link.dropdown.services?.map(s => ({
+            title: s.title,
+            link: (s.link as Page)?.path,
+            highlighted: s.highlighted,
+          })) || []}
+          testimonial={link.dropdown.testimonial ? {
+            quote: link.dropdown.testimonial.quote,
+            authorName: link.dropdown.testimonial.authorName,
+            authorTitle: link.dropdown.testimonial.authorTitle,
+            authorImage: link.dropdown.testimonial.authorImage as Media,
+          } : null}
+          backgroundImage={link.dropdown.backgroundImage as Media}
+        />
+      )
+    ))
+  }
+
+  {/* Desktop Actions - Right */}
+  <div class="hidden lg:flex items-center gap-4">
+    {header.phone && (
+       
+<a href={`tel:${header.phone}`} class="flex items-center gap-2 text-sm font-black text-white group-[.header-scrolled]:text-[#ff4d1c] transition-colors group">
+<div class="phone-icon-wrapper flex h-12.5 w-12.5 items-center justify-center rounded-full bg-primary text-white">
+                <Phone class="w-5 h-5" />
+              </div>
+              <div class="flex flex-col font-body text-sm font-semibold text-white uppercase">
+                <span>Call Now</span>
+                {header.phone}
+              </div>
+            </a>
+    )}
+
+    {header.cta?.label && (
+        <Link 
+            path={(header.cta.link as Page)?.path || '#'} 
+            class="hero-btn-white"
+        >
+            {header.cta.label}
+        </Link>
+    )}
+
+    {header.clientLoginLink && (
+        <a 
+            href={header.clientLoginLink} 
+            class=" font-body flex items-center gap-2.5 text-sm font-semibold text-white group-[.header-scrolled]:text-[#ff4d1c] hover:text-primary transition-colors"
+        >
+          <User class="w-5 h-5" />
+            <span>Client Login</span>
+        </a>
+    )}
+  </div>
+
+  {/* Mobile Menu Icon */}
+  <div class="block lg:hidden">
+    <button
+      class="menu-icon group"
+      id="menu-icon"
+      data-state="closed"
+      aria-label={labels.global['open-menu']}
+      aria-expanded="false"
+      data-label-open={labels.global['open-menu']}
+      data-label-close={labels.global['close-menu']}
+    >
+      <div class="space-y-1.5">
+        <span class="block h-0.5 w-6 bg-white group-[.header-scrolled]:bg-slate-900 transition-colors"></span>
+        <span class="block h-0.5 w-4 bg-white group-[.header-scrolled]:bg-slate-900 transition-colors ml-auto"></span>
+      </div>
+    </button>
+  </div>
+</header>
+
+{/* Mobile Modal */}
+<section
+  role="dialog"
+  class:list={['fixed inset-0 z-50 hidden h-screen w-screen bg-slate-900/95 backdrop-blur-md p-8 pt-24']}
+  id="navbar-modal"
+>
+  <div class="flex h-full flex-col items-center justify-between text-center">
+    <ul class="flex flex-col gap-8 list-none m-0 p-0">
+      {
+        header.links?.map((link) => (
+          <li>
+            <Link path={(link.page as Page)?.path} class="w-full text-2xl! font-black text-white uppercase tracking-widest hover:text-primary transition-colors">
+              {link.label}
+            </Link>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="flex flex-col items-center gap-8 w-full border-t border-white/10 pt-8">
+        {header.phone && (
+            <a href={`tel:${header.phone}`} class="text-xl font-black text-white">{header.phone}</a>
+        )}
+        
+        <div class="flex flex-row items-center justify-center gap-6">
+             {
+                 alternatePaths.map(({ hreflang, path }) => (
+                     <a
+                         href={normalizePath(path, preview)}
+                         class:list={[
+                             'text-sm font-bold uppercase tracking-widest',
+                             hreflang === locale ? 'text-primary' : 'text-white/60 hover:text-white',
+                         ]}
+                     >
+                         {hreflang}
+                     </a>
+                 ))
+             }
+        </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  function setupHeader() {
+    const modalButton = document.getElementById('menu-icon')
+    const modal = document.getElementById('navbar-modal')
+    const header = document.getElementById('header')
+
+    if (!modalButton || !modal || !header) {
+      return
+    }
+
+    const intercept = document.createElement('div')
+    intercept.setAttribute('data-observer-intercept', '')
+    header.before(intercept)
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) {
+        header.classList.remove('header-transparent', 'py-4')
+        header.classList.add('header-scrolled', 'bg-white/90', 'backdrop-blur-md', 'shadow-xl', 'py-2')
+        header.classList.add('header-scrolled')
+      } else {
+        header.classList.add('header-transparent', 'py-4')
+        header.classList.remove('header-scrolled', 'bg-white/90', 'backdrop-blur-md', 'shadow-xl', 'py-2')
+        header.classList.remove('header-scrolled')
+      }
+    })
+
+    observer.observe(intercept)
+
+    modalButton?.addEventListener('click', () => {
+      const isOpen = modalButton.classList.contains('active')
+      if (isOpen) {
+        modalButton.classList.remove('active')
+        modal?.classList.add('hidden')
+        document.body.style.overflow = 'auto'
+      } else {
+        modalButton.classList.add('active')
+        modal?.classList.remove('hidden')
+        document.body.style.overflow = 'hidden'
+      }
+    })
+
+    // Setup dropdown hover logic
+    const dropdownLinks = header.querySelectorAll('[data-dropdown="true"]')
+    const dropdownMenus = document.querySelectorAll('[data-dropdown-menu]')
+
+    dropdownLinks.forEach((link, index) => {
+      const menu = dropdownMenus[index]
+      if (!menu) return
+
+      let timeout
+
+      // Show dropdown
+      const showDropdown = () => {
+        if (timeout) clearTimeout(timeout)
+        menu.classList.remove('opacity-0', 'invisible')
+        menu.classList.add('opacity-100', 'visible')
+      }
+
+      // Hide dropdown with delay
+      const hideDropdown = () => {
+        timeout = setTimeout(() => {
+          menu.classList.remove('opacity-100', 'visible')
+          menu.classList.add('opacity-0', 'invisible')
+        }, 150)
+      }
+
+      link.addEventListener('mouseenter', showDropdown)
+      menu.addEventListener('mouseenter', showDropdown)
+      link.addEventListener('mouseleave', hideDropdown)
+      menu.addEventListener('mouseleave', hideDropdown)
+
+      // Keyboard accessibility
+      link.addEventListener('focus', showDropdown)
+      link.addEventListener('blur', hideDropdown)
+    })
+  }
+
+  document.addEventListener('astro:page-load', setupHeader)
+</script>
+
+<style>
+    .header-scrolled .group {
+        --tw-brightness: 1;
+        --tw-invert: 0;
+    }
+
+    #menu-icon.active div span:first-child {
+        transform: translateY(4px) rotate(45deg);
+        background-color: white !important;
+    }
+    #menu-icon.active div span:last-child {
+        transform: translateY(-4px) rotate(-45deg);
+        width: 1.5rem !important;
+        background-color: white !important;
+    }
+</style>

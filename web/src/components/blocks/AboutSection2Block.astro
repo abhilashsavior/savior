@@ -1,0 +1,49 @@
+---
+import Img from '@/components/Img.astro'
+import type { AboutSection2Block as AboutSection2BlockType, Media } from 'cms/src/payload-types'
+
+type Props = AboutSection2BlockType
+
+const { heading, boldHeading, teamMembers } = Astro.props
+const members = teamMembers as { name: string; image: Media; role: string }[]
+---
+
+<section class="w-full bg-white py-16 md:py-24 lg:py-32">
+  <div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-[1170px]">
+    <div class="text-center mb-16">
+      <h2
+        class="text-[28px] sm:text-[40px] lg:text-[55px] font-heading font-normal leading-[1.22] text-black"
+      >
+        {heading}
+        {boldHeading && <span class="font-semibold"> {boldHeading}</span>}
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
+      {members.map((member) => (
+        <div class="flex flex-col items-center">
+          <div class="w-full max-w-[366px] aspect-[366/445] overflow-hidden mb-6">
+            {typeof member.image === 'object' && member.image?.filename && (
+              <Img
+                image={member.image as Media}
+                size="md"
+                class="w-full h-full object-cover"
+                loading="lazy"
+              />
+            )}
+          </div>
+
+          <div class="w-full max-w-[366px]">
+            <div class="w-8 h-[2px] bg-black mb-4" aria-hidden="true"></div>
+            <h3 class="text-[32px] font-heading font-semibold leading-[67px] text-black">
+              {member.name}
+            </h3>
+            <p class="font-body text-lg leading-[30px] text-[#606060]">
+              {member.role}
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,58 @@
+---
+import Img from '@/components/Img.astro'
+import type { WebSection2Block as WebSection2BlockType, Media } from 'cms/src/payload-types'
+
+type Props = WebSection2BlockType
+
+const { heading, subheading, logos = [] } = Astro.props
+---
+
+<section class="w-full bg-white py-16 md:py-20 lg:py-24">
+  <div class="mx-auto px-4 sm:px-6 lg:px-8" style="padding-left: 400px;">
+    <div class="flex flex-col items-center gap-8 lg:flex-row lg:items-center lg:gap-[63px]">
+      {/* Left side - Heading */}
+      <div class="flex-shrink-0 lg:w-[467px]">
+        <h2
+          class="text-2xl font-bold leading-tight text-black lg:text-[55px]"
+          style="font-family: var(--font-heading, inherit); line-height: 67px;"
+        >
+          <span class="font-normal">{heading} </span>
+          {subheading && <span class="font-semibold">{subheading}</span>}
+        </h2>
+      </div>
+
+      {/* Vertical Divider */}
+      <div class="hidden h-16 w-px bg-gray-200 lg:block" aria-hidden="true"></div>
+
+      {/* Right side - Logos in 2 rows */}
+      <div class="lg:flex-1 lg:w-[641px]">
+        <div class="flex flex-col gap-6">
+          {/* Row 1 */}
+          <div class="flex flex-wrap items-center justify-center gap-[71px] lg:justify-start">
+{(logos.slice(0, 4) as Media[]).filter((item): item is Media => typeof item === 'object' && item?.filename === true).map((item, index) => (
+               <div key={index} class="flex items-center justify-center">
+                 <Img
+                   image={item}
+                   size="original"
+                   class="h-auto max-h-[40px] w-auto object-contain"
+                 />
+               </div>
+             ))}
+           </div>
+           {/* Row 2 */}
+           <div class="flex flex-wrap items-center justify-center gap-[57px] lg:justify-start">
+             {(logos.slice(4, 8) as Media[]).filter((item): item is Media => typeof item === 'object' && item?.filename === true).map((item, index) => (
+               <div key={index + 4} class="flex items-center justify-center">
+                 <Img
+                   image={item}
+                   size="original"
+                   class="h-auto max-h-[71px] w-auto object-contain"
+                 />
+               </div>
+             ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

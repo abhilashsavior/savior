@@ -1,0 +1,86 @@
+---
+import Link from '@/components/Link.astro'
+import Img from '@/components/Img.astro'
+import { CMS_URL } from 'astro:env/client'
+import type { Services2Block as Services2BlockType, Media, Page } from 'cms/src/payload-types'
+
+type Props = Services2BlockType
+
+const { backgroundImage, overlayImage, overlayText, heading, headingHighlight, items } = Astro.props
+const servicesItems = items || []
+
+const bgUrl = (() => {
+  if (backgroundImage && typeof backgroundImage === 'object' && backgroundImage !== null && 'url' in backgroundImage) {
+    const url = backgroundImage.url
+    if (typeof url === 'string' && url.length > 0) {
+      return url.startsWith('/') ? `${CMS_URL}${url}` : url
+    }
+  }
+  return undefined
+})()
+
+const overlayImgUrl = (() => {
+  if (overlayImage && typeof overlayImage === 'object' && overlayImage !== null && 'url' in overlayImage) {
+    const url = overlayImage.url
+    if (typeof url === 'string' && url.length > 0) {
+      return url.startsWith('/') ? `${CMS_URL}${url}` : url
+    }
+  }
+  return undefined
+})()
+---
+
+<section class="w-full bg-[#161919] relative overflow-hidden py-16 md:py-20 lg:py-[120px]">
+  {bgUrl && (
+    <img
+      src={bgUrl}
+      alt=""
+      class="absolute inset-0 w-full h-full object-cover opacity-10"
+      aria-hidden="true"
+      loading="lazy"
+    />
+  )}
+  
+  <div class="absolute top-0 left-0 w-full h-full -translate-y-1/2 lg:-translate-y-0">
+    <div class="absolute -translate-x-1/2 bg-secrets-accent h-[400px] md:h-[600px] lg:h-[820px] left-1/2 w-[90%] md:w-[80%] lg:w-[1660px] -top-[100px] md:-top-[150px] lg:top-[1172px]"></div>
+  </div>
+  
+  {overlayText && overlayImgUrl && (
+    <div class="absolute inset-0 flex items-center justify-center pointer-events-none -translate-y-1/2 lg:-translate-y-0">
+      <p
+        class="font-heading font-bold text-white text-[80px] sm:text-[120px] lg:text-[238px] uppercase tracking-[2px] lg:tracking-[19.04px] leading-[1.1] whitespace-nowrap"
+        style={{
+          maskImage: `url("${overlayImgUrl}")`,
+          maskSize: 'contain',
+          maskPosition: 'center',
+          maskRepeat: 'no-repeat',
+        }}
+      >
+        {overlayText}
+      </p>
+    </div>
+  )}
+
+  <div class="relative mx-auto max-w-[1202px] px-4 sm:px-6 lg:px-8">
+    <h2 class="text-center font-heading text-[28px] sm:text-[40px] lg:text-[55px] font-normal leading-[1.22] text-white mb-12 lg:mb-16">
+      <span class="block">{heading}</span>
+      <strong class="font-heading font-semibold text-white">{headingHighlight}</strong>
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-[70px] gap-y-12 md:gap-y-[100px]">
+      {servicesItems.map((item) => (
+        <div class="relative">
+          <p class="font-heading text-[22px] md:text-[32px] font-semibold text-white mb-4 whitespace-nowrap">
+            {item.number}
+          </p>
+          <svg class="w-full h-px mb-4" viewBox="0 0 256 1" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <line x1="0.5" y1="0.5" x2="255.5" y2="0.5" stroke="white" stroke-width="1"/>
+          </svg>
+          <p class="font-body text-[16px] md:text-[22px] font-semibold text-white uppercase leading-[1.5]">
+            {item.description}
+          </p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

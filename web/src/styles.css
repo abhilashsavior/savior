@@ -1,0 +1,244 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --font-body: 'Open Sans', ui-sans-serif, system-ui, -apple-system;
+  --font-heading: 'Montserrat Variable', ui-sans-serif, system-ui, -apple-system;
+  --color-primary: #ff4d1c;
+  --color-primary-dark: #e04419;
+  --color-neutral-150: #ededed;
+  --color-agency-forest: #111716;
+  --color-agency-logo-surface: #252928;
+  --color-agency-logo-muted: #f5f5f5;
+  --color-secrets-bg: #161919;
+  --color-secrets-accent: #ef4924;
+  --color-blog-orange: #ef4924;
+  --color-text-gray: #606060;
+  --color-text-light: #969696;
+}
+
+@layer base {
+  html {
+    /* Scroll offset to account for the fixed header */
+    @apply scroll-pt-26 md:scroll-pt-22;
+  }
+
+  body {
+    font-family: var(--font-body);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
+  }
+
+  h1,
+  h2 {
+    @apply sm:hyphenate-none hyphenate;
+  }
+}
+
+@layer components {
+  .header-solid {
+    @apply bg-white;
+  }
+
+  .header-scrolled {
+    @apply bg-white shadow-sm;
+  }
+
+  .header-transparent {
+    @apply bg-transparent;
+  }
+
+  .menu-icon {
+    @apply relative h-12 w-12 cursor-pointer;
+  }
+
+  .menu-icon div {
+    @apply absolute top-0 right-0 bottom-0 left-0 m-auto h-4 w-7;
+  }
+
+  .menu-icon span {
+    @apply absolute block h-[3px] w-full rounded-sm bg-slate-700;
+    transition: all 0.2s cubic-bezier(0.1, 0.82, 0.76, 0.965);
+  }
+
+  .menu-icon span:first-of-type {
+    @apply top-0;
+  }
+
+  .menu-icon span:last-of-type {
+    @apply bottom-0 left-[1/5] w-[4/5];
+  }
+
+  .menu-icon[data-state='open'] span:first-of-type,
+  .menu-icon.active span:first-of-type {
+    @apply top-[4px];
+    transform: rotate(45deg);
+  }
+
+  .menu-icon[data-state='open'] span:last-of-type,
+  .menu-icon.active span:last-of-type {
+    @apply bottom-[9px] left-0 w-full;
+    transform: rotate(-45deg);
+  }
+}
+
+@utility hyphenate {
+  hyphens: auto;
+
+  hyphenate-limit-chars: 10 6 6;
+  -ms-hyphenate-limit-chars: 10 6 6;
+  -webkit-hyphenate-limit-before: 6;
+  -webkit-hyphenate-limit-after: 6;
+}
+
+@utility hyphenate-tight {
+  hyphens: auto;
+
+  hyphenate-limit-chars: 10 6 4;
+  -ms-hyphenate-limit-chars: 10 6 4;
+  -webkit-hyphenate-limit-before: 6;
+  -webkit-hyphenate-limit-after: 4;
+}
+
+@utility hyphenate-none {
+  hyphens: none;
+}
+
+.savior-container {
+  max-width: 1170px;
+}
+
+.hero-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+  isolation: isolate;
+
+  padding: 15px 48px;
+  border-radius: 9999px;
+
+  background: #ff4d1c;
+  color: white;
+
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+
+  transition: color 0.3s ease;
+}
+
+.hero-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+
+  background: #e63e0f;
+
+  transform: translateX(-100%);
+  transition: transform 0.4s ease;
+
+  z-index: -1;
+}
+
+.hero-btn:hover::before {
+  transform: translateX(0);
+}
+
+.hero-btn:hover {
+  color: white;
+}
+
+.hero-btn-white {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+  isolation: isolate;
+
+  padding: 15px 48px;
+  border-radius: 9999px;
+
+  background: #ffffff;
+  color: #ff4d1c;
+
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+
+  transition: color 0.3s ease;
+}
+
+.hero-btn-white::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+
+  background: #ff4d1c;
+
+  transform: translateX(-100%);
+  transition: transform 0.4s ease;
+
+  z-index: -1;
+}
+
+.hero-btn-white:hover::before {
+  transform: translateX(0);
+}
+
+.hero-btn-white:hover {
+  color: #ffffff;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  20% {
+    transform: rotate(-15deg);
+  }
+  40% {
+    transform: rotate(15deg);
+  }
+  60% {
+    transform: rotate(-10deg);
+  }
+  80% {
+    transform: rotate(10deg);
+  }
+}
+
+.group:hover .phone-icon-wrapper {
+  animation: shake 1s ease-in-out infinite;
+}
+
+.get-free-consult-btn {
+  @apply inline-flex items-center justify-center px-10 py-3.75 bg-[#ff4d1c] text-white font-semibold text-sm uppercase tracking-wide rounded-full hover:bg-[#e64418] transition-colors duration-200;
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}

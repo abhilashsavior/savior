@@ -1,0 +1,108 @@
+---
+import type { FaqSectionBlock as FaqSectionBlockType } from 'cms/src/payload-types'
+
+type Props = FaqSectionBlockType
+
+const { heading, items } = Astro.props
+const faqItems = items || []
+---
+
+<section class="w-full bg-white py-16 md:py-20 lg:py-[100px]" data-accordion-root>
+  <div class="mx-auto max-w-[1202px] px-4 sm:px-6 lg:px-8">
+    <h2 class="text-center font-['Montserrat:SemiBold'] text-[28px] sm:text-[40px] lg:text-[55px] font-semibold leading-[1.22] text-slate-900 mb-12 lg:mb-[75px]">
+      {heading}
+    </h2>
+
+    <div class="space-y-0">
+      {faqItems.map((item, index) => {
+        const isExpanded = item.isExpanded
+
+        return (
+          <div
+            class="border-t border-gray-200 first:border-t-0"
+            data-accordion-item
+            data-expanded={isExpanded ? 'true' : 'false'}
+          >
+            <div class="flex items-start justify-between py-6 lg:py-10 cursor-pointer" data-accordion-trigger>
+              <div class="flex items-start gap-4 lg:gap-[55px] flex-1">
+                <span class="font-['Montserrat:Medium'] text-[22px] font-medium text-[#ef4924] leading-none shrink-0 uppercase">
+                  {item.number}
+                </span>
+                <h3 class="font-['Montserrat:SemiBold'] text-[22px] font-semibold text-slate-900 uppercase mt-1">
+                  {item.question}
+                </h3>
+              </div>
+
+              <div class="shrink-0 mt-2">
+                <svg
+                  class="w-6 h-6 text-gray-400 transition-transform duration-300"
+                  data-accordion-icon
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </div>
+            </div>
+
+            <div class="overflow-hidden transition-all duration-300 max-h-0" data-accordion-content>
+              <div class="pb-4 pl-[60px] lg:pl-[60px] pr-12">
+                <p class="font-['Open_Sans:Regular'] text-[16px] leading-[28px] text-[#606060] max-w-[1033px]" style={{ fontVariationSettings: '"wdth" 100' }}>
+                  {item.answer}
+                </p>
+              </div>
+            </div>
+          </div>
+        )
+      })}
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  const initAccordion = () => {
+    const root = document.querySelector('[data-accordion-root]')
+    if (!root || root.dataset.initialized === 'true') return
+
+    root.querySelectorAll('[data-accordion-item]').forEach((item) => {
+      const trigger = item.querySelector('[data-accordion-trigger]')
+      const content = item.querySelector('[data-accordion-content]')
+      const icon = item.querySelector('[data-accordion-icon]')
+
+      if (!trigger || !content) return
+
+      const isInitiallyExpanded = item.dataset.expanded === 'true'
+      if (isInitiallyExpanded) {
+        content.style.maxHeight = content.scrollHeight + 'px'
+        if (icon) icon.style.transform = 'rotate(90deg)'
+      }
+
+      trigger.addEventListener('click', () => {
+        const isOpen = item.dataset.expanded === 'true'
+
+        root.querySelectorAll('[data-accordion-item]').forEach((other) => {
+          const otherContent = other.querySelector('[data-accordion-content]')
+          const otherIcon = other.querySelector('[data-accordion-icon]')
+          other.dataset.expanded = 'false'
+          if (otherContent) otherContent.style.maxHeight = '0'
+          if (otherIcon) otherIcon.style.transform = 'rotate(0deg)'
+        })
+
+        if (!isOpen) {
+          item.dataset.expanded = 'true'
+          content.style.maxHeight = content.scrollHeight + 'px'
+          if (icon) icon.style.transform = 'rotate(90deg)'
+        }
+      })
+    })
+
+    root.dataset.initialized = 'true'
+  }
+
+  document.addEventListener('astro:page-load', initAccordion)
+  initAccordion()
+</script>

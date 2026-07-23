@@ -1,0 +1,81 @@
+---
+import Img from '@/components/Img.astro'
+import type { WebTestimonialsBlock as WebTestimonialsBlockType, Media } from 'cms/src/payload-types'
+
+type Props = WebTestimonialsBlockType
+
+const { testimonials = [] } = Astro.props
+---
+
+<section class="w-full bg-[#ef4924] py-[90px] px-4 sm:px-6 lg:px-[125px] relative min-h-[652px]">
+  <div class="relative z-10 flex flex-col gap-[59px] items-center w-full lg:max-w-[1795px]">
+    <div class="flex flex-col lg:flex-row gap-[62px] items-center w-full max-w-[1162px]">
+      {testimonials.map((item: any) => (
+        <div class="flex flex-col gap-[24px] items-start relative w-full lg:w-[346px]">
+          <div class="absolute -top-6 -left-7 opacity-10">
+            <svg width="167" height="166" viewBox="0 0 167 166" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-[167px] h-[167px] text-white">
+              <path d="M57.6 107.2C57.6 104.8 59.6 102.8 62 102.8H74C76.4 102.8 78.4 104.8 78.4 107.2V119.2C78.4 121.6 76.4 123.6 74 123.6H62C59.6 123.6 57.6 121.6 57.6 119.2V107.2Z" fill="currentColor"/>
+              <path d="M88.6 107.2C88.6 104.8 90.6 102.8 93 102.8H105C107.4 102.8 109.4 104.8 109.4 107.2V119.2C109.4 121.6 107.4 123.6 105 123.6H93C90.6 123.6 88.6 121.6 88.6 119.2V107.2Z" fill="currentColor"/>
+              <path d="M57.6 74.2C57.6 71.8 59.6 69.8 62 69.8H74C76.4 69.8 78.4 71.8 78.4 74.2V86.2C78.4 88.6 76.4 90.6 74 90.6H62C59.6 90.6 57.6 88.6 57.6 86.2V74.2Z" fill="currentColor"/>
+              <path d="M88.6 74.2C88.6 71.8 90.6 69.8 93 69.8H105C107.4 69.8 109.4 71.8 109.4 74.2V86.2C109.4 88.6 107.4 90.6 105 90.6H93C90.6 90.6 88.6 88.6 88.6 86.2V74.2Z" fill="currentColor"/>
+              <path d="M57.6 41.2C57.6 38.8 59.6 36.8 62 36.8H74C76.4 36.8 78.4 38.8 78.4 41.2V53.2C78.4 55.6 76.4 57.6 74 57.6H62C59.6 57.6 57.6 55.6 57.6 53.2V41.2Z" fill="currentColor"/>
+              <path d="M88.6 41.2C88.6 38.8 90.6 36.8 93 36.8H105C107.4 36.8 109.4 38.8 109.4 41.2V53.2C109.4 55.6 107.4 57.6 105 57.6H93C90.6 57.6 88.6 55.6 88.6 53.2V41.2Z" fill="currentColor"/>
+            </svg>
+          </div>
+          
+          <div class="flex items-center gap-0.5 pl-1">
+            {Array.from({ length: item.rating || 5 }, () => (
+              <svg class="size-[22px] text-white" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+              </svg>
+            ))}
+          </div>
+
+          <p class="font-body text-[18px] leading-[30px] text-white relative z-10 max-w-[346px]">{item.quote}</p>
+
+          <div class="mt-4 flex items-center gap-3 relative z-10">
+            {item.authorImage && typeof item.authorImage === 'object' && item.authorImage?.filename && (
+              <div class="relative">
+                <div class="border border-solid border-white h-[50px] w-[30px] rounded-[50px] overflow-hidden">
+                  <Img image={item.authorImage as Media} size="original" class="w-full h-full object-cover" loading="lazy" />
+                </div>
+              </div>
+            )}
+            <div>
+              <span class="font-body font-semibold text-[18px] text-white">{item.author}</span>
+              {item.role && <span class="block font-body text-[14px] text-white">{item.role}</span>}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="flex items-center justify-between w-full lg:max-w-[1162px]">
+      <button
+        type="button"
+        class="flex items-center justify-center size-[29px] rounded-[500px] border border-white"
+        aria-label="Previous"
+      >
+        <svg class="w-[13px] h-[10px] rotate-180" viewBox="0 0 14 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9 1L13 5L9 9M13 5H1" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+
+      <div class="flex gap-2">
+        <div class="w-[13px] h-[13px] rounded-full bg-white"></div>
+        <div class="w-[13px] h-[13px] rounded-full bg-white/50"></div>
+        <div class="w-[13px] h-[13px] rounded-full bg-white/50"></div>
+      </div>
+
+      <button
+        type="button"
+        class="flex items-center justify-center size-[29px] rounded-[500px] border border-white"
+        aria-label="Next"
+      >
+        <svg class="w-[13px] h-[10px]" viewBox="0 0 14 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9 1L13 5L9 9M13 5H1" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</section>

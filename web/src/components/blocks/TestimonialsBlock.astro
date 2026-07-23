@@ -1,0 +1,181 @@
+---
+import Link from '@/components/Link.astro'
+import type { TestimonialsBlock as TestimonialsBlockType, Page } from 'cms/src/payload-types'
+
+type Props = TestimonialsBlockType
+
+const { heading, boldHeading, ctaButton, phoneCta, testimonials = [] } = Astro.props
+const carouselId = `testimonials-${Math.random().toString(36).slice(2, 10)}`
+
+const ctaLink = ctaButton?.externalUrl || ((ctaButton?.link as Page)?.path ?? '#')
+---
+
+<section class="w-full bg-white py-16 md:py-20 lg:py-24" id={carouselId}>
+  <div class="mx-auto max-w-[1170px] px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col lg:flex-row lg:items-start gap-[56px]">
+      <div class="max-w-[561px] shrink-0">
+        <h2 class="font-heading text-[28px] sm:text-[40px] lg:text-[55px] font-normal leading-[1.22] text-slate-900">
+          {heading}
+          {boldHeading && <strong class="font-semibold"> {boldHeading}</strong>}
+        </h2>
+
+        <div class="mt-10 flex flex-wrap items-center gap-[17px]">
+          {ctaButton?.label && (
+            <Link
+              path={ctaLink}
+              class="inline-flex items-center justify-center px-10 py-3.75 bg-[#ff4d1c] text-white font-semibold text-sm uppercase tracking-wide rounded-full hover:bg-[#e64418] transition-colors duration-200"
+            >
+              {ctaButton.label}
+            </Link>
+          )}
+          <span class="text-sm font-semibold uppercase text-gray-400">or</span>
+          {phoneCta?.phone && (
+            <a
+              href={`tel:${phoneCta.phone}`}
+              class="inline-flex items-center gap-[9px] group"
+            >
+              <span class="flex items-center justify-center size-[50px] rounded-full border border-black">
+                <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M21.5 16.08V19.5C21.5 19.831 21.3683 20.149 21.1337 20.3837C20.899 20.6183 20.581 20.75 20.25 20.75C17.374 20.432 14.6135 19.4624 12.22 17.93C9.98699 16.5218 8.10545 14.6403 6.69724 12.4073C5.15604 10.0016 4.18585 7.2264 3.878 4.34375C3.86465 4.19511 3.87705 4.04519 3.91454 3.90128C3.95204 3.75736 4.01385 3.62196 4.09683 3.50155C4.17981 3.38113 4.28238 3.27783 4.39924 3.19659C4.5161 3.11536 4.64514 3.05764 4.781 3.02625L8.201 2.28475C8.4668 2.22638 8.74344 2.24446 8.99905 2.33693C9.25466 2.4294 9.47909 2.59232 9.64721 2.80705L11.9242 5.68605C12.2644 6.10935 12.3213 6.69356 12.0722 7.175L10.8792 9.561C12.3125 11.9009 14.2369 13.8254 16.5768 15.2587L18.9628 14.0657C19.4442 13.8166 20.0284 13.8735 20.4517 14.2137L23.3307 16.4907C23.5454 16.6589 23.7084 16.8833 23.8008 17.1389C23.8933 17.3945 23.9114 17.6712 23.853 17.937L23.1115 21.357C22.9784 21.9518 22.6016 22.4549 22.1072 22.757C21.6128 23.059 21.0437 23.1319 20.5 22.9587" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              {phoneCta.label && <span class="text-sm font-semibold uppercase text-black">{phoneCta.label}</span>}
+            </a>
+          )}
+        </div>
+      </div>
+
+      <div class="flex-1 relative">
+        <div class="overflow-hidden">
+          <div class="flex transition-transform duration-500 ease-out" data-track>
+            {testimonials.map((item, index) => (
+              <div key={index} class="w-full shrink-0" data-slide data-index={index}>
+                <div class="flex items-center gap-0.5 mb-6">
+                  {Array.from({ length: item.rating || 5 }, (_, i) => (
+                    <svg key={i} class="size-[22px] text-[#FFB800]" viewBox="0 0 20 20" fill="currentColor">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                    </svg>
+                  ))}
+                </div>
+
+                <div class="relative">
+                  <p class="font-body text-lg leading-[30px] text-[#606060]">
+                    {item.quote}
+                  </p>
+                  <div class="mt-4">
+                    <span class="font-body font-semibold text-lg text-black">{item.author}</span>
+                    {item.role && (
+                      <span class="font-body text-sm text-[#606060] ml-2">{item.role}</span>
+                    )}
+                  </div>
+                </div>
+
+                <div class="absolute bottom-0 right-0 opacity-10">
+                  <svg width="167" height="166" viewBox="0 0 167 166" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M57.6 107.2C57.6 104.8 59.6 102.8 62 102.8H74C76.4 102.8 78.4 104.8 78.4 107.2V119.2C78.4 121.6 76.4 123.6 74 123.6H62C59.6 123.6 57.6 121.6 57.6 119.2V107.2Z" fill="currentColor"/>
+                    <path d="M88.6 107.2C88.6 104.8 90.6 102.8 93 102.8H105C107.4 102.8 109.4 104.8 109.4 107.2V119.2C109.4 121.6 107.4 123.6 105 123.6H93C90.6 123.6 88.6 121.6 88.6 119.2V107.2Z" fill="currentColor"/>
+                    <path d="M57.6 74.2C57.6 71.8 59.6 69.8 62 69.8H74C76.4 69.8 78.4 71.8 78.4 74.2V86.2C78.4 88.6 76.4 90.6 74 90.6H62C59.6 90.6 57.6 88.6 57.6 86.2V74.2Z" fill="currentColor"/>
+                    <path d="M88.6 74.2C88.6 71.8 90.6 69.8 93 69.8H105C107.4 69.8 109.4 71.8 109.4 74.2V86.2C109.4 88.6 107.4 90.6 105 90.6H93C90.6 90.6 88.6 88.6 88.6 86.2V74.2Z" fill="currentColor"/>
+                    <path d="M57.6 41.2C57.6 38.8 59.6 36.8 62 36.8H74C76.4 36.8 78.4 38.8 78.4 41.2V53.2C78.4 55.6 76.4 57.6 74 57.6H62C59.6 57.6 57.6 55.6 57.6 53.2V41.2Z" fill="currentColor"/>
+                    <path d="M88.6 41.2C88.6 38.8 90.6 36.8 93 36.8H105C107.4 36.8 109.4 38.8 109.4 41.2V53.2C109.4 55.6 107.4 57.6 105 57.6H93C90.6 57.6 88.6 55.6 88.6 53.2V41.2Z" fill="currentColor"/>
+                  </svg>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between mt-8">
+          <button
+            type="button"
+            data-prev
+            class="flex items-center justify-center size-[30px] rounded-full border border-[#d9d9d9] text-gray-400 hover:text-black hover:border-black transition-colors"
+            aria-label="Previous testimonial"
+          >
+            <svg class="size-4 rotate-180" viewBox="0 0 14 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 1L13 5L9 9M13 5H1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+
+          <div class="flex gap-[17px]">
+            {testimonials.map((_, index) => (
+              <button
+                key={index}
+                type="button"
+                data-dot
+                data-index={index}
+                class={`size-[9px] rounded-full transition-all duration-300 ${index === 0 ? 'bg-[#ef4924] w-[25px] rounded-[5px]' : 'bg-gray-300'}`}
+                aria-label={`Go to testimonial ${index + 1}`}
+              />
+            ))}
+          </div>
+
+          <button
+            type="button"
+            data-next
+            class="flex items-center justify-center size-[30px] rounded-full border border-[#d9d9d9] text-gray-400 hover:text-black hover:border-black transition-colors"
+            aria-label="Next testimonial"
+          >
+            <svg class="size-4" viewBox="0 0 14 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 1L13 5L9 9M13 5H1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  const initCarousel = () => {
+    const carousel = document.getElementById('${carouselId}')
+    if (!carousel || carousel.dataset.initialized === 'true') return
+
+    const track = carousel.querySelector('[data-track]')
+    const slides = Array.from(carousel.querySelectorAll('[data-slide]'))
+    const dots = Array.from(carousel.querySelectorAll('[data-dot]'))
+    const prevButton = carousel.querySelector('[data-prev]')
+    const nextButton = carousel.querySelector('[data-next]')
+
+    if (!track || slides.length === 0) return
+
+    let currentIndex = 0
+
+    const updateCarousel = () => {
+      track.style.transform = `translateX(-${currentIndex * 100}%)`
+
+      dots.forEach((dot, i) => {
+        if (i === currentIndex) {
+          dot.classList.add('bg-[#ef4924]', 'w-[25px]', 'rounded-[5px]')
+          dot.classList.remove('bg-gray-300', 'w-[9px]', 'rounded-full')
+        } else {
+          dot.classList.remove('bg-[#ef4924]', 'w-[25px]', 'rounded-[5px]')
+          dot.classList.add('bg-gray-300', 'w-[9px]', 'rounded-full')
+        }
+      })
+    }
+
+    prevButton?.addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + slides.length) % slides.length
+      updateCarousel()
+    })
+
+    nextButton?.addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % slides.length
+      updateCarousel()
+    })
+
+    dots.forEach((dot) => {
+      dot.addEventListener('click', () => {
+        currentIndex = parseInt(dot.dataset.index || '0')
+        updateCarousel()
+      })
+    })
+
+    updateCarousel()
+    carousel.dataset.initialized = 'true'
+  }
+
+  document.addEventListener('astro:page-load', initCarousel)
+  initCarousel()
+</script>

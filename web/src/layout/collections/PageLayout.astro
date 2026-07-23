@@ -1,0 +1,38 @@
+---
+import { organizationSchema } from '@/schema/organization'
+import { pageSchema } from '@/schema/page'
+import { Schema } from 'astro-seo-schema'
+import type { Page } from 'cms/src/payload-types'
+import Section from '../../components/Section.astro'
+import SectionBlock from '../../components/SectionBlock.astro'
+import HeroSection from '../../layout/HeroSection.astro'
+
+type Props = {
+  page: Page
+}
+
+const { page: pageData } = Astro.props
+const { locale } = Astro.locals.globalState
+const isRootPage = 'isRootPage' in pageData && Boolean(pageData.isRootPage)
+const hidePageShell = 'hidePageShell' in pageData && Boolean(pageData.hidePageShell)
+
+const schema = isRootPage ? organizationSchema() : pageSchema(pageData, locale)
+---
+
+{
+  hidePageShell ? (
+    pageData.sections?.[0]?.blocks?.map((block) => <SectionBlock {...block} />)
+  ) : (
+    <>
+      <HeroSection {...pageData.hero} breadcrumbs={pageData.breadcrumbs} />
+
+      {
+        pageData.sections?.map((section, index) => (
+          <Section {...section} withoutTopSpace={index === 0 && !pageData.isRootPage} />
+        ))
+      }
+
+      <Schema item={schema} />
+    </>
+  )
+}

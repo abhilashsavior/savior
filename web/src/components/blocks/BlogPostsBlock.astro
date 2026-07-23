@@ -1,0 +1,185 @@
+---
+import Img from '@/components/Img.astro'
+import Link from '@/components/Link.astro'
+import { payloadSDK } from '@/cms/sdk'
+import type { BlogPostsBlock, Category, Media, Post } from 'cms/src/payload-types'
+
+type Props = BlogPostsBlock
+
+const { posts = [] } = Astro.props
+
+const postsData = (posts || []).filter((p): p is Post => typeof p === 'object') as Post[]
+
+let categoriesData: Category[] = []
+try {
+  const categoriesResult = await payloadSDK.find({
+    collection: 'categories',
+    limit: 0,
+    pagination: false,
+  })
+  categoriesData = categoriesResult.docs as Category[]
+} catch (error) {
+  console.error('Failed to fetch categories:', error)
+}
+
+const getAuthorNames = (authors: (string | { name: string })[] | undefined): string => {
+  return authors?.map((a) => typeof a === 'object' ? a.name : 'Author').join(', ') || 'Author'
+}
+---
+
+<!-- You are here Section -->
+{postsData.length > 0 && (
+  <div class="w-full bg-[#ef4924] py-20">
+    <div class="savior-container mx-auto px-4">
+<div class="w-full overflow-hidden bg-[#ef4924] py-12">
+  <div class="relative flex whitespace-nowrap">
+    <div class="animate-marquee flex items-center gap-8">
+      <span class="text-white/10 text-[180px] font-bold uppercase leading-none select-none">SAVIOR MARKETING - LIBERATING WEB DESIGN SERVICES - SAVIOR MARKETING - LIBERATING WEB DESIGN SERVICES -</span>
+      <span class="text-white/10 text-[180px] font-bold uppercase leading-none select-none">SAVIOR MARKETING - LIBERATING WEB DESIGN SERVICES - SAVIOR MARKETING - LIBERATING WEB DESIGN SERVICES -</span>
+    </div>
+  </div>
+</div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 justify-center">
+        {postsData.slice(0, 4).map((post, i) => (
+          <div class="flex flex-col items-center">
+            <div class="h-[10px] w-[282px] bg-white mb-6" />
+            <p class="text-[32px] font-semibold text-white mb-6">{String(i + 1).padStart(2, '0')}</p>
+            <svg class="h-px w-[256px] mb-6" viewBox="0 0 73 1" fill="none">
+              <line x1="73" y1="0.5" stroke="#fff" stroke-width="1" />
+            </svg>
+            <p class="text-[22px] font-semibold text-white uppercase w-[266px] text-center leading-[34px]">
+              {post.title}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+)}
+
+<div class="w-full bg-white">
+  <div class="savior-container mx-auto px-4">
+    <!-- Search and Category Row -->
+    <div class="flex flex-col md:flex-row items-center justify-center gap-6 mb-16 pt-20">
+      <div class="relative w-full md:w-auto">
+        <input
+          type="search"
+          id="blog-search"
+          placeholder="Search Articles"
+          class="w-full md:w-[768px] h-[75px] pl-8 pr-16 rounded-full border border-[var(--color-blog-orange)] focus:outline-none focus:ring-2 focus:ring-[var(--color-blog-orange)]/50 font-['Open_Sans:Regular'] text-[18px] text-[#606060]"
+        />
+        <svg class="absolute right-6 top-1/2 -translate-y-1/2 size-[26px]" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M21 21L15 15M10 18C6.13401 18 3 14.866 3 11C3 7.13401 6.13401 4 10 4C13.866 4 17 7.13401 17 11C17 14.866 13.866 18 10 18Z" stroke="#ef4924" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </div>
+
+      <div class="relative w-full md:w-auto">
+        <select id="blog-category" class="w-full md:w-[365px] h-[75px] pl-8 pr-16 rounded-full border border-black appearance-none bg-white font-['Open_Sans:Regular'] text-[18px] text-[#606060] focus:outline-none">
+          <option value="">Select category</option>
+          {categoriesData.map((category) => (
+            <option value={category.slug}>{category.name}</option>
+          ))}
+        </select>
+        <svg class="absolute right-6 top-1/2 -translate-y-1/2 size-[24px] rotate-90" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </div>
+    </div>
+
+    <!-- Blog Posts Grid -->
+    <div id="blog-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-20">
+      {postsData.length > 0 ? (
+        postsData.map((post) => (
+          <article class="blog-card bg-white rounded-lg overflow-hidden" data-category={(post.categories as Category[] | undefined)?.map((c) => c.slug).join(' ') || ''} data-title={post.title.toLowerCase()} data-excerpt={post.excerpt.toLowerCase()}>
+            {typeof post.image === 'object' && post.image?.filename && (
+              <Link path={post.path} class="block">
+                <Img image={post.image as Media} size="xl" class="w-full h-[314px] object-cover" />
+              </Link>
+            )}
+
+            <div class="pt-8 pb-6 px-6">
+              <div class="flex items-center gap-4 mb-4">
+                <span class="text-sm text-[#969696]">By {getAuthorNames(post.authors)}</span>
+                <span class="text-sm text-[#969696]">
+                  {new Date(post.updatedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                </span>
+              </div>
+
+              <div class="mb-6">
+                <svg class="h-px w-[73px]" viewBox="0 0 73 1" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <line x1="73" y1="0.5" stroke="#ef4924" stroke-width="1" />
+                </svg>
+              </div>
+
+              <h3 class="mb-4 text-[22px] font-semibold text-black uppercase line-clamp-3 leading-[34px]">{post.title}</h3>
+
+              <p class="mb-6 text-[16px] text-[#606060] leading-[28px] line-clamp-3">{post.excerpt}</p>
+
+              <Link path={post.path} class="inline-flex items-center gap-2 text-[14px] font-bold uppercase text-black hover:text-[var(--color-blog-orange)] transition-colors">
+                Continue Reading
+                <svg class="size-[27px] -rotate-45" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12H19M19 12L13 6M19 12L13 18" />
+                </svg>
+              </Link>
+            </div>
+          </article>
+        ))
+      ) : (
+        <div class="col-span-full py-12 text-center">
+          <p class="text-slate-500">No blog posts selected. Go to the page editor and select posts to display.</p>
+        </div>
+      )}
+    </div>
+
+    <div id="no-results" class="hidden py-12 text-center">
+      <p class="text-slate-500">No blog posts match your search criteria.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  const searchInput = document.getElementById('blog-search') as HTMLInputElement | null
+  const categorySelect = document.getElementById('blog-category') as HTMLSelectElement | null
+  const blogGrid = document.getElementById('blog-grid')
+  const noResults = document.getElementById('no-results')
+
+  function filterPosts() {
+    const searchTerm = searchInput?.value.toLowerCase() || ''
+    const selectedCategory = categorySelect?.value || ''
+
+    if (!blogGrid) return
+
+    const cards = blogGrid.querySelectorAll('.blog-card')
+    let visibleCount = 0
+
+    cards.forEach((card) => {
+      const title = (card as HTMLElement).dataset.title || ''
+      const excerpt = (card as HTMLElement).dataset.excerpt || ''
+      const category = (card as HTMLElement).dataset.category || ''
+
+      const matchesSearch = title.includes(searchTerm) || excerpt.includes(searchTerm)
+      const matchesCategory = selectedCategory === '' || category.includes(selectedCategory)
+
+      if (matchesSearch && matchesCategory) {
+        (card as HTMLElement).classList.remove('hidden')
+        visibleCount++
+      } else {
+        (card as HTMLElement).classList.add('hidden')
+      }
+    })
+
+    if (noResults) {
+      if (visibleCount === 0) {
+        noResults.classList.remove('hidden')
+        blogGrid.classList.add('hidden')
+      } else {
+        noResults.classList.add('hidden')
+        blogGrid.classList.remove('hidden')
+      }
+    }
+  }
+
+  searchInput?.addEventListener('input', filterPosts)
+  categorySelect?.addEventListener('change', filterPosts)
+</script>

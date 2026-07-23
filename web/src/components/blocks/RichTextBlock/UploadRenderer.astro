@@ -1,0 +1,32 @@
+---
+import type { UploadNode } from '@jhb.software/astro-payload-richtext-lexical'
+import type { Media } from 'cms/src/payload-types'
+import Img from '../../Img.astro'
+
+type Props = { node: UploadNode }
+
+const { node } = Astro.props
+
+// Check if the media is populated (object with filename and is an image) or just an ID (string)
+const isMediaPopulated = typeof node.value === 'object' && node.value !== null && 'filename' in node.value && (node.value as Media)?.mimeType?.startsWith('image/')
+
+---
+
+{
+  (() => {
+    if (node.relationTo === 'media' && isMediaPopulated) {
+      return (
+        <Img
+          image={node.value as unknown as Media}
+          size="md"
+          class="w-full rounded-2xl md:max-w-128"
+        />
+      )
+    }
+    // If media is not populated (just an ID), render nothing or a placeholder
+    if (node.relationTo === 'media' && typeof node.value === 'string') {
+      console.warn(`Media not populated in rich text, ID: ${node.value}`)
+    }
+    return null
+  })()
+}

@@ -1,0 +1,76 @@
+---
+import type { Breadcrumbs, HeroSection, Media, Page } from 'cms/src/payload-types'
+// import BreadcrumbsBlock from '../components/Breadcrumbs.astro'
+import Img from '../components/Img.astro'
+import Link from '../components/Link.astro'
+import { Phone } from 'lucide-astro'
+
+export type Props = HeroSection & { breadcrumbs: Breadcrumbs }
+
+const { title, subtitle, backgroundImage, primaryCTA, secondaryCTA } = Astro.props
+---
+
+<section
+  class="relative flex h-[960px] min-h-[80vh] flex-col items-center justify-center overflow-hidden px-5 pt-32 pb-24 text-white"
+>
+  {/* Background Image with Overlay */}
+  {backgroundImage && typeof backgroundImage === 'object' && backgroundImage?.filename && (
+    <div class="absolute inset-0 z-0">
+      <Img image={backgroundImage as Media} size="original" class="h-full w-full object-cover" />
+      <div class="absolute inset-0 bg-black/20" />
+    </div>
+  )}
+
+  <div class="relative z-10 container mx-auto flex flex-col items-center space-y-7.5 text-center">
+    <!-- {breadcrumbs && breadcrumbs.length > 0 && (
+        <div class="mb-8 opacity-80 hover:opacity-100 transition-opacity">
+            <BreadcrumbsBlock breadcrumbs={breadcrumbs} />
+        </div>
+    )} -->
+
+    <h1
+      class="text-5xl leading-[1.2] font-medium tracking-tight text-balance text-white md:text-7xl lg:text-[5.5rem]"
+      set:html={title}
+    />
+
+    <p class="font-body mx-auto max-w-4xl text-lg leading-8 font-semibold md:text-xl">
+      {subtitle}
+    </p>
+
+    <div class="flex flex-col items-center gap-4 sm:flex-row sm:gap-4">
+      {
+        primaryCTA?.label && (
+          <Link
+            path={(primaryCTA.link as Page)?.path || '#'}
+            class="hero-btn"
+          >
+            {primaryCTA.label}
+          </Link>
+        )
+      }
+
+      {
+        primaryCTA?.label && secondaryCTA?.label && (
+          <span class="text-sm font-semibold tracking-wider uppercase">OR</span>
+        )
+      }
+
+      {
+        secondaryCTA?.label && (
+          <a
+            href={secondaryCTA.phone ? `tel:${secondaryCTA.phone}` : '#'}
+            class="group flex items-center gap-2 text-white transition-colors duration-200 hover:text-[#FF4D1C]"
+          >
+            <div class="phone-icon-wrapper flex h-12.5 w-12.5 items-center justify-center rounded-full border border-white bg-transparent transition-colors duration-200 group-hover:border-[#FF4D1C]">
+               <Phone class="w-5 h-5" />
+            </div>
+            <span class="text-sm font-semibold whitespace-nowrap uppercase">
+              {secondaryCTA.label}{' '}
+              {secondaryCTA.phone && <span class="">{secondaryCTA.phone}</span>}
+            </span>
+          </a>
+        )
+      }
+    </div>
+  </div>
+</section>

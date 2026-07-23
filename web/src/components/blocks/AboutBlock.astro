@@ -1,0 +1,69 @@
+---
+import Img from '@/components/Img.astro'
+import Link from '@/components/Link.astro'
+import type { AboutBlock as AboutBlockType, Media, Page } from 'cms/src/payload-types'
+
+type Props = AboutBlockType
+
+const { image, heading, description, primaryCta, phoneCta } = Astro.props
+
+const ctaLink = primaryCta?.externalUrl || ((primaryCta?.link as Page)?.path ?? '#')
+---
+
+<section class="w-full bg-white">
+  <div class="grid grid-cols-1 lg:grid-cols-2 min-h-[600px] lg:min-h-[910px]">
+    {(image && typeof image === 'object' && image?.filename) && (
+      <div class="relative h-[400px] lg:h-full overflow-hidden">
+        <Img
+          image={image as Media}
+          size="lg"
+          class="absolute inset-0 w-full h-full object-cover"
+          loading="lazy"
+        />
+      </div>
+    )}
+
+    <div class="flex flex-col justify-center px-6 py-12 lg:px-16 lg:py-20 xl:px-20">
+      <div class="max-w-[531px]">
+        <h2
+          class="text-[28px] sm:text-[40px] lg:text-[55px] font-heading font-normal leading-[1.22] text-slate-900 mb-8"
+        >
+          {heading}
+        </h2>
+
+        {description && (
+          <p class="font-body text-base leading-7 text-[#606060] mb-12">
+            {description}
+          </p>
+        )}
+
+        <div class="flex flex-wrap items-center gap-[17px]">
+          {primaryCta?.label && (
+            <Link
+              path={ctaLink}
+              class="get-free-consult-btn"
+            >
+              {primaryCta.label}
+            </Link>
+          )}
+
+          <span class="text-sm font-semibold uppercase text-gray-400">or</span>
+
+          {phoneCta?.label && phoneCta?.phone && (
+            <a
+              href={`tel:${phoneCta.phone}`}
+              class="inline-flex items-center gap-[9px] group"
+            >
+              <span class="flex items-center justify-center size-[50px] rounded-full border border-black">
+                <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M21.5 16.08V19.5C21.5 19.831 21.3683 20.149 21.1337 20.3837C20.899 20.6183 20.581 20.75 20.25 20.75C17.374 20.432 14.6135 19.4624 12.22 17.93C9.98699 16.5218 8.10545 14.6403 6.69724 12.4073C5.15604 10.0016 4.18585 7.2264 3.878 4.34375C3.86465 4.19511 3.87705 4.04519 3.91454 3.90128C3.95204 3.75736 4.01385 3.62196 4.09683 3.50155C4.17981 3.38113 4.28238 3.27783 4.39924 3.19659C4.5161 3.11536 4.64514 3.05764 4.781 3.02625L8.201 2.28475C8.4668 2.22638 8.74344 2.24446 8.99905 2.33693C9.25466 2.4294 9.47909 2.59232 9.64721 2.80705L11.9242 5.68605C12.2644 6.10935 12.3213 6.69356 12.0722 7.175L10.8792 9.561C12.3125 11.9009 14.2369 13.8254 16.5768 15.2587L18.9628 14.0657C19.4442 13.8166 20.0284 13.8735 20.4517 14.2137L23.3307 16.4907C23.5454 16.6589 23.7084 16.8833 23.8008 17.1389C23.8933 17.3945 23.9114 17.6712 23.853 17.937L23.1115 21.357C22.9784 21.9518 22.6016 22.4549 22.1072 22.757C21.6128 23.059 21.0437 23.1319 20.5 22.9587" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <span class="text-sm font-semibold uppercase text-black">{phoneCta.label}</span>
+            </a>
+          )}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

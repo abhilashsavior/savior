@@ -1,0 +1,92 @@
+---
+import Link from '@/components/Link.astro'
+import type { AboutSection4Block as AboutSection4BlockType, Page } from 'cms/src/payload-types'
+
+type Props = AboutSection4BlockType
+
+const { heading, boldHeading, description, rating = 5, testimonial, primaryCta, phoneCta } = Astro.props
+
+const ctaLink = primaryCta?.externalUrl || ((primaryCta?.link as Page)?.path ?? '#')
+const ratingStars = Array.from({ length: 5 }, (_, i) => i < (rating ?? 5))
+---
+
+<section class="w-full bg-white py-16 md:py-24 lg:py-32">
+  <div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-[1170px]">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+      <div>
+        <h2
+          class="text-[28px] sm:text-[40px] lg:text-[55px] font-heading font-normal leading-[1.22] text-black mb-8"
+        >
+          {heading}
+          {boldHeading && <span class="font-semibold"> {boldHeading}</span>}
+        </h2>
+
+        {description && (
+          <p class="font-body text-lg leading-[30px] text-[#606060] mb-12 max-w-[480px]">
+            {description}
+          </p>
+        )}
+
+        <div class="flex flex-wrap items-center gap-[17px]">
+          {primaryCta?.label && (
+            <Link
+              path={ctaLink}
+              class="get-free-consult-btn"
+            >
+              {primaryCta.label}
+            </Link>
+          )}
+
+          <span class="text-sm font-semibold uppercase text-gray-400">or</span>
+
+          {phoneCta?.label && phoneCta?.phone && (
+            <a
+              href={`tel:${phoneCta.phone}`}
+              class="inline-flex items-center gap-[9px] group"
+            >
+              <span class="flex items-center justify-center size-[50px] rounded-full border border-black">
+                <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M21.5 16.08V19.5C21.5 19.831 21.3683 20.149 21.1337 20.3837C20.899 20.6183 20.581 20.75 20.25 20.75C17.374 20.432 14.6135 19.4624 12.22 17.93C9.98699 16.5218 8.10545 14.6403 6.69724 12.4073C5.15604 10.0016 4.18585 7.2264 3.878 4.34375C3.86465 4.19511 3.87705 4.04519 3.91454 3.90128C3.95204 3.75736 4.01385 3.62196 4.09683 3.50155C4.17981 3.38113 4.28238 3.27783 4.39924 3.19659C4.5161 3.11536 4.64514 3.05764 4.781 3.02625L8.201 2.28475C8.4668 2.22638 8.74344 2.24446 8.99905 2.33693C9.25466 2.4294 9.47909 2.59232 9.64721 2.80705L11.9242 5.68605C12.2644 6.10935 12.3213 6.69356 12.0722 7.175L10.8792 9.561C12.3125 11.9009 14.2369 13.8254 16.5768 15.2587L18.9628 14.0657C19.4442 13.8166 20.0284 13.8735 20.4517 14.2137L23.3307 16.4907C23.5454 16.6589 23.7084 16.8833 23.8008 17.1389C23.8933 17.3945 23.9114 17.6712 23.853 17.937L23.1115 21.357C22.9784 21.9518 22.6016 22.4549 22.1072 22.757C21.6128 23.059 21.0437 23.1319 20.5 22.9587" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <span class="text-sm font-semibold uppercase text-black">{phoneCta.label}</span>
+            </a>
+          )}
+        </div>
+      </div>
+
+      <div class="relative">
+        <div class="flex items-center gap-1 mb-6">
+          {ratingStars.map((filled) => (
+            <svg width="22" height="22" viewBox="0 0 22 22" fill={filled ? '#ef4924' : 'none'} xmlns="http://www.w3.org/2000/svg">
+              <path d="M11 1L13.7166 7.58769L21 8.45488L15.5 13.3123L17.4332 20.5L11 16.5877L4.56678 20.5L6.5 13.3123L1 8.45488L8.28344 7.58769L11 1Z" stroke="#ef4924" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          ))}
+        </div>
+
+        {testimonial?.quote && (
+          <div class="relative">
+            <svg class="absolute -top-2 -left-2 w-12 h-12 text-[#ef4924] opacity-20" viewBox="0 0 167 167" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M79.5 167C57.5 167 39.5 149 39.5 127C39.5 105 57.5 87 79.5 87V51C37.5 51 3.5 85 3.5 127C3.5 149 21.5 167 43.5 167H79.5ZM163.5 167C141.5 167 123.5 149 123.5 127C123.5 105 141.5 87 163.5 87V51C121.5 51 87.5 85 87.5 127C87.5 149 105.5 167 127.5 167H163.5Z" fill="currentColor"/>
+            </svg>
+
+            <div class="pl-8">
+              <p class="font-body text-lg leading-[30px] text-[#606060] whitespace-pre-wrap mb-6">
+                {testimonial.quote}
+              </p>
+
+              {testimonial.author && (
+                <p class="font-body text-lg leading-[30px]">
+                  <span class="font-semibold text-black">{testimonial.author}</span>
+                  {testimonial.role && (
+                    <span class="text-sm text-[#606060]"> {testimonial.role}</span>
+                  )}
+                </p>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+</section>

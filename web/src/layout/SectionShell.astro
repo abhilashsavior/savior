@@ -1,0 +1,14 @@
+---
+type Props = {
+  class?: string
+  sectionClass?: string
+}
+
+const { class: className, sectionClass: sectionClassName } = Astro.props
+---
+
+<section class:list={[sectionClassName]}>
+  <div class:list={['', className]}>
+    <slot />
+  </div>
+</section>

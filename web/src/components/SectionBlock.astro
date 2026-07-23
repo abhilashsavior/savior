@@ -1,0 +1,159 @@
+---
+import type {
+  BrandsBlock as BrandsBlockType,
+  AboutBlock as AboutBlockType,
+  TransparencyBlock as TransparencyBlockType,
+  AdvantagesOfHeroBlock as AdvantagesOfHeroBlockType,
+  ServicesBlock as ServicesBlockType,
+  Services2Block as Services2BlockType,
+  WhyChooseBlock as WhyChooseBlockType,
+  TestimonialsBlock as TestimonialsBlockType,
+  DynamicWordPressBlock as DynamicWordPressBlockType,
+  PortfolioCarouselBlock as PortfolioCarouselBlockType,
+  AgencyHeroBrandsBlock as AgencyHeroBrandsBlockType,
+  CtaBlock as CtaBlockType,
+  RichTextBlock as RichTextBlockType,
+  BlogPostsBlock as BlogPostsBlockType,
+  AuthorsBlock as AuthorsBlockType,
+  CaseStudyCarouselBlock as CaseStudyCarouselBlockType,
+  LoginBlock as LoginBlockType,
+  OnlineBusinessBlock as OnlineBusinessBlockType,
+  FeaturedCaseStudyBlock as FeaturedCaseStudyBlockType,
+  CounselingBlock as CounselingBlockType,
+  PortfolioGridBlock as PortfolioGridBlockType,
+  AboutSection1Block as AboutSection1BlockType,
+  AboutSection2Block as AboutSection2BlockType,
+  AboutSection3Block as AboutSection3BlockType,
+  AboutSection4Block as AboutSection4BlockType,
+  AboutSection5Block as AboutSection5BlockType,
+  WebTestimonialsBlock as WebTestimonialsBlockType,
+  WebSection2Block as WebSection2BlockType,
+WebSection6Block as WebSection6BlockType,
+  SecretsBlock as SecretsBlockType,
+  OurSeoBlock as OurSeoBlockType,
+  SeoServices2Block as SeoServices2BlockType,
+  SeoServices6Block as SeoServices6BlockType,
+  PricingSectionBlock as PricingSectionBlockType,
+  FaqSectionBlock as FaqSectionBlockType,
+
+  Page,
+} from 'cms/src/payload-types'
+import BrandsBlock from './blocks/BrandsBlock.astro'
+import AboutBlock from './blocks/AboutBlock.astro'
+import TransparencyBlock from './blocks/TransparencyBlock.astro'
+import AdvantagesOfHeroBlock from './blocks/AdvantagesOfHeroBlock.astro'
+import ServicesBlock from './blocks/ServicesBlock.astro'
+import Services2Block from './blocks/Services2Block.astro'
+import WhyChooseBlock from './blocks/WhyChooseBlock.astro'
+import TestimonialsBlock from './blocks/TestimonialsBlock.astro'
+import DynamicWordPressBlock from './blocks/DynamicWordPressBlock.astro'
+import PortfolioCarouselBlock from './blocks/PortfolioCarouselBlock.astro'
+import AgencyHeroBrandsBlock from './blocks/AgencyHeroBrandsBlock.astro'
+import CtaBlock from './blocks/CtaBlock.astro'
+import RichTextBlock from './blocks/RichTextBlock/RichTextBlock.astro'
+import BlogPostsBlock from './blocks/BlogPostsBlock.astro'
+import AuthorsBlock from './blocks/AuthorsBlock.astro'
+import CaseStudyCarouselBlock from './blocks/CaseStudyCarouselBlock.astro'
+import LoginBlock from './blocks/LoginBlock.astro'
+import OnlineBusinessBlock from './blocks/OnlineBusinessBlock.astro'
+import FeaturedCaseStudyBlock from './blocks/FeaturedCaseStudyBlock.astro'
+import CounselingBlock from './blocks/CounselingBlock.astro'
+import PortfolioGridBlock from './blocks/PortfolioGridBlock.astro'
+import AboutSection1Block from './blocks/AboutSection1Block.astro'
+import AboutSection2Block from './blocks/AboutSection2Block.astro'
+import AboutSection3Block from './blocks/AboutSection3Block.astro'
+import AboutSection4Block from './blocks/AboutSection4Block.astro'
+import AboutSection5Block from './blocks/AboutSection5Block.astro'
+import WebTestimonialsBlock from './blocks/WebTestimonialsBlock.astro'
+import WebSection2Block from './blocks/WebSection2Block.astro'
+import WebSection6Block from './blocks/WebSection6Block.astro'
+import SecretsBlock from './blocks/SecretsBlock.astro'
+import OurSeoBlock from './blocks/OurSeoBlock.astro'
+import SeoServices2Block from './blocks/SeoServices2Block.astro'
+import SeoServices6Block from './blocks/SeoServices6Block.astro'
+import PricingSectionBlock from './blocks/PricingSectionBlock.astro'
+import FaqSectionBlock from './blocks/FaqSectionBlock.astro'
+
+export type Props = NonNullable<NonNullable<Page['sections']>[number]['blocks']>[number]
+
+const { blockType, ...props } = Astro.props
+---
+
+{
+  () => {
+    switch (blockType) {
+      case 'brands':
+        return <BrandsBlock {...(props as BrandsBlockType)} />
+      case 'about':
+        return <AboutBlock {...(props as AboutBlockType)} />
+      case 'transparency':
+        return <TransparencyBlock {...(props as TransparencyBlockType)} />
+      case 'advantages-of-hero':
+        return <AdvantagesOfHeroBlock {...(props as AdvantagesOfHeroBlockType)} />
+      case 'services':
+        return <ServicesBlock {...(props as ServicesBlockType)} />
+      case 'services-2':
+        return <Services2Block {...(props as Services2BlockType)} />
+      case 'why-choose':
+        return <WhyChooseBlock {...(props as WhyChooseBlockType)} />
+      case 'testimonials':
+        return <TestimonialsBlock {...(props as TestimonialsBlockType)} />
+      case 'dynamic-wordpress':
+        return <DynamicWordPressBlock {...(props as DynamicWordPressBlockType)} />
+      case 'portfolio-carousel':
+        return <PortfolioCarouselBlock {...(props as PortfolioCarouselBlockType)} />
+      case 'agency-hero-brands':
+        return <AgencyHeroBrandsBlock {...(props as AgencyHeroBrandsBlockType)} />
+      case 'cta':
+        return <CtaBlock {...(props as CtaBlockType)} />
+      case 'rich-text':
+        return <RichTextBlock {...(props as RichTextBlockType)} />
+      case 'blog-posts':
+        return <BlogPostsBlock {...(props as BlogPostsBlockType)} />
+      case 'authors':
+        return <AuthorsBlock {...(props as AuthorsBlockType)} />
+      case 'case-study-carousel':
+        return <CaseStudyCarouselBlock {...(props as CaseStudyCarouselBlockType)} />
+      case 'login':
+        return <LoginBlock {...(props as LoginBlockType)} />
+      case 'online-business':
+        return <OnlineBusinessBlock {...(props as OnlineBusinessBlockType)} />
+      case 'featured-case-study':
+        return <FeaturedCaseStudyBlock {...(props as FeaturedCaseStudyBlockType)} />
+      case 'counseling':
+        return <CounselingBlock {...(props as CounselingBlockType)} />
+      case 'portfolio-grid':
+        return <PortfolioGridBlock {...(props as PortfolioGridBlockType)} />
+      case 'about-section-1':
+        return <AboutSection1Block {...(props as AboutSection1BlockType)} />
+      case 'about-section-2':
+        return <AboutSection2Block {...(props as AboutSection2BlockType)} />
+      case 'about-section-3':
+        return <AboutSection3Block {...(props as AboutSection3BlockType)} />
+      case 'about-section-4':
+        return <AboutSection4Block {...(props as AboutSection4BlockType)} />
+      case 'about-section-5':
+        return <AboutSection5Block {...(props as AboutSection5BlockType)} />
+      case 'web-testimonials':
+        return <WebTestimonialsBlock {...(props as WebTestimonialsBlockType)} />
+      case 'web-section-2':
+        return <WebSection2Block {...(props as WebSection2BlockType)} />
+      case 'web-section-6':
+        return <WebSection6Block {...(props as WebSection6BlockType)} />
+      case 'secrets':
+        return <SecretsBlock {...(props as SecretsBlockType)} />
+      case 'our-seo':
+        return <OurSeoBlock {...(props as OurSeoBlockType)} />
+      case 'seo-services-2':
+        return <SeoServices2Block {...(props as SeoServices2BlockType)} />
+      case 'seo-services-6':
+        return <SeoServices6Block {...(props as SeoServices6BlockType)} />
+      case 'pricing-section':
+        return <PricingSectionBlock {...(props as PricingSectionBlockType)} />
+      case 'faq-section':
+        return <FaqSectionBlock {...(props as FaqSectionBlockType)} />
+      default:
+        throw new Error('Block type not implemented: ' + blockType)
+    }
+  }
+}

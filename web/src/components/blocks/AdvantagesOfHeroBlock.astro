@@ -1,0 +1,102 @@
+---
+import { CMS_URL } from 'astro:env/client'
+import type { AdvantagesOfHeroBlock as AdvantagesOfHeroBlockType, Media } from 'cms/src/payload-types'
+
+type Props = AdvantagesOfHeroBlockType
+
+const { backgroundImage, heading, boldHeading, subtitle, description, ctaButton, testimonial } = Astro.props
+
+const bgUrl = (() => {
+  if (backgroundImage && typeof backgroundImage === 'object' && backgroundImage !== null && 'url' in backgroundImage) {
+    const url = backgroundImage.url
+    if (typeof url === 'string' && url.length > 0) {
+      return url.startsWith('/') ? `${CMS_URL}${url}` : url
+    }
+  }
+  return undefined
+})()
+---
+
+<section class="relative isolate w-full overflow-hidden bg-[#111716]">
+  {bgUrl && (
+    <img src={bgUrl} alt="" class="absolute inset-0 z-0 h-full w-full object-cover" aria-hidden="true" loading="lazy" />
+  )}
+
+  <div class="mx-auto flex max-w-[1795px] items-center justify-center gap-[43px] px-6 py-16 md:px-10 md:py-20 lg:px-[133px] lg:py-[142px] relative z-10">
+    <div class="hidden shrink-0 items-center justify-center lg:flex">
+      <div class="-scale-y-100 rotate-180 flex-none">
+        <div class="flex size-[74px] items-center justify-center rounded-full border border-white bg-white/10 py-1 text-white">
+          <svg width="35" height="27" viewBox="0 0 35 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 13.5H33M33 13.5L21.5 2M33 13.5L21.5 25" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col items-center justify-center gap-10 md:gap-[70px] lg:flex-row">
+      <div class="flex w-full max-w-[666px] shrink-0 flex-col gap-[34px]">
+        <h2 class="w-full max-w-[636px] font-heading text-[28px] font-normal leading-[1.22] text-white sm:text-[40px] lg:text-[55px] lg:leading-[67px]">
+          {heading}
+          <strong class="font-semibold"> {boldHeading}</strong>
+        </h2>
+
+        <div class="h-px w-full max-w-[626px] bg-white/45"></div>
+
+        <p class="w-full font-body text-[16px] font-semibold uppercase leading-[32px] tracking-[0.18em] text-white sm:text-[18px] lg:text-[20px]">
+          {subtitle}
+        </p>
+
+        <div class="h-px w-full max-w-[626px] bg-white/45"></div>
+
+        <p class="w-full max-w-[624px] font-body text-base leading-[30px] text-white/90 sm:text-[18px]">
+          {description}
+        </p>
+
+        {ctaButton?.label && (
+          <div class="flex shrink-0 items-center gap-[3px]">
+            <div class="flex size-[38.131px] shrink-0 items-center justify-center">
+              <div class="flex-none rotate-[42deg]">
+                <div class="relative size-[27px] overflow-hidden">
+                  <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 h-full w-full">
+                    <path d="M2 13.5H25M25 13.5L13.5 2M25 13.5L13.5 25" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <a
+              href={ctaButton.link ?? '#'}
+              class="text-center font-body text-sm font-bold uppercase tracking-[0.25em] text-white transition hover:text-[#EF4924]"
+            >
+              {ctaButton.label}
+            </a>
+          </div>
+        )}
+      </div>
+
+      {testimonial && (
+        <div class="relative flex h-[350px] w-full max-w-[448px] shrink-0 items-center justify-center bg-white px-6 py-8 md:h-[486px] md:px-9 md:py-[51px] shadow-[0_25px_70px_rgba(15,23,42,0.14)]">
+          <div class="w-full max-w-[356px] text-[16px] leading-[28px] text-[#606060]">
+            <p>{testimonial.quote}</p>
+            <p class="mt-4 font-bold text-black">{testimonial.author}</p>
+          </div>
+          <svg class="absolute bottom-[30px] right-[46px] h-[86px] w-[87px] text-[#EFEFEF]" viewBox="0 0 87 87" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M25.5 61.5C25.5 60.1193 26.6193 59 28 59H36C37.3807 59 38.5 60.1193 38.5 61.5V69.5C38.5 70.8807 37.3807 72 36 72H28C26.6193 72 25.5 70.8807 25.5 69.5V61.5Z" fill="currentColor"/>
+            <path d="M48.5 61.5C48.5 60.1193 49.6193 59 51 59H59C60.3807 59 61.5 60.1193 61.5 61.5V69.5C61.5 70.8807 60.3807 72 59 72H51C49.6193 72 48.5 70.8807 48.5 69.5V61.5Z" fill="currentColor"/>
+            <path d="M25.5 39C25.5 37.6193 26.6193 36.5 28 36.5H36C37.3807 36.5 38.5 37.6193 38.5 39V47C38.5 48.3807 37.3807 49.5 36 49.5H28C26.6193 49.5 25.5 48.3807 25.5 47V39Z" fill="currentColor"/>
+            <path d="M48.5 39C48.5 37.6193 49.6193 36.5 51 36.5H59C60.3807 36.5 61.5 37.6193 61.5 39V47C61.5 48.3807 60.3807 49.5 59 49.5H51C49.6193 49.5 48.5 48.3807 48.5 47V39Z" fill="currentColor"/>
+            <path d="M25.5 16.5C25.5 15.1193 26.6193 14 28 14H36C37.3807 14 38.5 15.1193 38.5 16.5V24.5C38.5 25.8807 37.3807 27 36 27H28C26.6193 27 25.5 25.8807 25.5 24.5V16.5Z" fill="currentColor"/>
+            <path d="M48.5 16.5C48.5 15.1193 49.6193 14 51 14H59C60.3807 14 61.5 15.1193 61.5 16.5V24.5C61.5 25.8807 60.3807 27 59 27H51C49.6193 27 48.5 25.8807 48.5 24.5V16.5Z" fill="currentColor"/>
+          </svg>
+        </div>
+      )}
+    </div>
+
+    <div class="hidden shrink-0 items-center justify-center lg:flex">
+      <div class="flex size-[74px] items-center justify-center rounded-full border border-white bg-white/10 py-1 text-white">
+        <svg width="35" height="27" viewBox="0 0 35 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 13.5H33M33 13.5L21.5 2M33 13.5L21.5 25" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>

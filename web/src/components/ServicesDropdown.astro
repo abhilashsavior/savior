@@ -1,0 +1,134 @@
+---
+import type { Media } from 'cms/src/payload-types'
+import { ChevronRight } from 'lucide-astro'
+import Link from './Link.astro'
+import Img from './Img.astro'
+
+interface ServiceItem {
+  title: string
+  link?: string
+  highlighted?: boolean | null
+}
+
+interface TestimonialData {
+  quote: string
+  authorName: string
+  authorTitle?: string | null
+  authorImage?: Media | null
+}
+
+interface Props {
+  services: ServiceItem[]
+  testimonial?: TestimonialData | null
+  backgroundImage?: Media | null
+}
+
+const { services, testimonial, backgroundImage } = Astro.props
+---
+
+<div class="dropdown-menu fixed left-1/2 -translate-x-1/2 w-[1630px] bg-white shadow-lg opacity-0 invisible transition-all duration-200 z-50" style="top: 88px; height: 305px;" data-dropdown-menu>
+  <div class="w-full h-full relative">
+    <div class="absolute top-0 left-[380px] w-[511px] h-full py-10 pl-12 pr-8 flex flex-col justify-center">
+      <ul class="grid grid-cols-2 gap-x-8 gap-y-6 list-none m-0 p-0">
+        {
+          services.map((service) => (
+            <li>
+              {
+                service.link ? (
+                  <Link
+                    path={service.link}
+                    class:list={[
+                      'font-body text-sm font-semibold no-underline transition-colors duration-200 gap-1',
+                      service.highlighted
+                        ? 'text-[#ef4924]'
+                        : 'text-black hover:text-[#ef4924]',
+                    ]}
+                  >
+                    <span class="flex items-center gap-2">
+                      <ChevronRight class="w-3 h-3" style="transform: rotate(42deg);" />
+                      {service.title}
+                    </span>
+                  </Link>
+                ) : (
+                  <span
+                    class:list={[
+                      'font-body text-sm font-semibold cursor-default gap-1',
+                      service.highlighted ? 'text-[#ef4924]' : 'text-black',
+                    ]}
+                  >
+                    <span class="flex items-center gap-2">
+                      <ChevronRight class="w-3 h-3" style="transform: rotate(42deg);" />
+                      {service.title}
+                    </span>
+                  </span>
+                )
+              }
+              {service.highlighted && (
+                <span class="block w-[202px] h-px bg-[#ef4924] mt-2" />
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="absolute top-0 left-[930px] w-[700px] h-full overflow-hidden">
+      {backgroundImage && typeof backgroundImage === 'object' && 'filename' in backgroundImage ? (
+        <>
+          <Img
+            image={backgroundImage as Media}
+            class="absolute inset-0 w-full h-full object-cover"
+          />
+          <div class="absolute inset-0" style="background-color: rgba(239, 73, 36, 0.77);" />
+        </>
+      ) : (
+        <div class="absolute inset-0 bg-primary" />
+      )}
+
+      {testimonial && (
+        <div class="relative z-10 flex flex-col justify-center h-full px-10 py-10 text-white">
+          <svg
+            class="w-[70px] h-[70px] mb-6 text-white/30"
+            viewBox="0 0 70 70"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M29.167 43.167H14.583a2.917 2.917 0 0 1-2.916-2.917V29.167a2.917 2.917 0 0 1 2.916-2.917h11.084a2.917 2.917 0 0 1 2.917 2.917v14.583ZM55.417 43.167H40.833a2.917 2.917 0 0 1-2.916-2.917V29.167a2.917 2.917 0 0 1 2.916-2.917h11.084a2.917 2.917 0 0 1 2.917 2.917v11.083c0 1.61-1.306 2.917-2.917 2.917Z"
+              fill="currentColor"
+            />
+            <path
+              d="M29.167 43.167h-4.375v4.375c0 1.61 1.306 2.916 2.916 2.916h1.459v-7.291ZM55.417 43.167H51.04v4.375c0 1.61 1.307 2.916 2.917 2.916h1.459v-7.291Z"
+              fill="currentColor"
+            />
+          </svg>
+
+          <p class="font-body text-sm leading-relaxed mb-8 max-w-[500px]">
+            {testimonial.quote}
+          </p>
+
+          <div class="flex items-center gap-4">
+            {testimonial.authorImage &&
+              typeof testimonial.authorImage === 'object' &&
+              'filename' in testimonial.authorImage && (
+                <div class="w-[50px] h-[50px] rounded-full overflow-hidden border-2 border-white shrink-0">
+                  <Img
+                    image={testimonial.authorImage as Media}
+                    class="w-full h-full object-cover"
+                    width={50}
+                    height={50}
+                  />
+                </div>
+              )}
+            <div>
+              <p class="font-body text-sm font-semibold">{testimonial.authorName}</p>
+              {testimonial.authorTitle && (
+                <p class="font-body text-xs opacity-80">{testimonial.authorTitle}</p>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  </div>
+</div>

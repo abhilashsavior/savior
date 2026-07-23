@@ -1,0 +1,58 @@
+---
+import Img from '@/components/Img.astro'
+import type { AboutSection3Block as AboutSection3BlockType, Media } from 'cms/src/payload-types'
+
+type Props = AboutSection3BlockType
+
+const { heading, boldHeading, brandLogos, banners } = Astro.props
+const logos = brandLogos as { logo: Media }[]
+const bannerList = banners as { heading: string; boldHeading?: string; description: string }[]
+---
+
+<section class="w-full bg-[#161919]">
+  <div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-[1170px] py-16 md:py-24">
+    <div class="text-center mb-16">
+      <h2
+        class="text-[28px] sm:text-[40px] lg:text-[55px] font-heading font-normal leading-[1.22] text-white"
+      >
+        {heading}
+        {boldHeading && <span class="font-semibold"> {boldHeading}</span>}
+      </h2>
+    </div>
+
+<div class="flex flex-wrap items-center justify-center gap-8 md:gap-12 lg:gap-16 mb-16">
+       {logos.filter((item): item is { logo: Media } => typeof item.logo === 'object' && item.logo?.filename === true).map((item) => (
+         <div class="flex items-center justify-center size-[171px] rounded-full bg-white/10 p-6">
+           <Img
+             image={item.logo}
+             size="sm"
+             class="max-h-20 w-auto object-contain"
+             loading="lazy"
+           />
+         </div>
+       ))}
+     </div>
+  </div>
+
+  {bannerList.map((banner) => (
+    <div class="bg-[#ef4924] py-12 md:py-16">
+      <div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-[1170px]">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+          <div>
+            <h3
+              class="text-[28px] sm:text-[40px] lg:text-[55px] font-heading font-medium leading-[1.22] text-white"
+            >
+              {banner.heading}
+              {banner.boldHeading && <span class="font-semibold"> {banner.boldHeading}</span>}
+            </h3>
+          </div>
+          <div>
+            <p class="font-body text-lg leading-[30px] text-white">
+              {banner.description}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  ))}
+</section>

@@ -1,0 +1,7 @@
+packages:
+  - "web"
+  - "cms"
+allowBuilds:
+  esbuild: false
+  sharp: false
+  unrs-resolver: false

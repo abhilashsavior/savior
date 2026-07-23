@@ -1,0 +1,151 @@
+---
+import Img from '@/components/Img.astro'
+import type { PortfolioGridBlock as PortfolioGridBlockType, Media } from 'cms/src/payload-types'
+
+type Props = PortfolioGridBlockType
+
+const { heading, items, categories } = Astro.props
+const portfolioItems = items || []
+const filterCategories = categories || []
+---
+
+<section
+  class="w-full bg-white py-16 md:py-20 lg:py-[100px]"
+  data-portfolio-grid
+>
+  <div class="mx-auto max-w-[1202px] px-4 sm:px-6 lg:px-8">
+    <h2 class="mb-10 text-center font-heading text-[28px] font-normal leading-[1.22] text-black sm:text-[40px] lg:mb-[70px] lg:text-[55px]">
+      <span>Some of Our </span>
+      <span class="font-semibold">Best Work</span>
+    </h2>
+
+    <div class="mb-10 flex flex-wrap items-center justify-center gap-3 lg:mb-12">
+      <button
+        data-filter="all"
+        class="inline-block cursor-pointer rounded-[50px] border border-[rgba(0,0,0,0.08)] px-5 py-2 text-center font-body text-[18px] leading-[30px] text-black transition data-[active=true]:bg-[#ef4924] data-[active=true]:text-white"
+        data-active="true"
+      >
+        All
+      </button>
+      {filterCategories.map((cat) => (
+        <button
+          data-filter={cat.label}
+          data-active={cat.isActive ? 'true' : 'false'}
+          class="inline-block cursor-pointer rounded-[50px] border border-[rgba(0,0,0,0.08)] px-5 py-2 text-center font-body text-[18px] leading-[30px] text-black transition data-[active=true]:bg-[#ef4924] data-[active=true]:text-white"
+        >
+          {cat.label}
+        </button>
+      ))}
+    </div>
+
+    <div class="grid grid-cols-1 gap-[30px] md:grid-cols-2 lg:grid-cols-3" data-portfolio-grid-items>
+      {portfolioItems.map((item, index) => (
+        <div
+          key={index}
+          data-category={item.category || 'all'}
+          class="flex flex-col overflow-hidden border border-[#d9d9d9] bg-white"
+        >
+          <div class="relative mx-[17px] mt-4 h-[351px] overflow-hidden border border-[#efefef]">
+            {item.image && typeof item.image === 'object' && item.image?.filename && (
+              <Img
+                image={item.image as Media}
+                size="md"
+                class="h-full w-full object-cover"
+                loading="lazy"
+              />
+            )}
+          </div>
+
+          <div class="flex flex-1 flex-col border-b border-l border-r border-[#d9d9d9] p-6">
+            <div class="flex items-start justify-between">
+              <div>
+                <h3 class="font-heading text-[18px] font-semibold uppercase leading-[26px] text-black">
+                  {item.title}
+                </h3>
+                {item.description && (
+                  <p class="mt-2 font-body text-[12px] leading-5 text-[#606060]">
+                    {item.description}
+                  </p>
+                )}
+              </div>
+
+              <a
+                href={item.ctaLink || '#'}
+                class="flex size-[68px] shrink-0 items-center justify-center"
+              >
+                <span class="flex size-[46px] rotate-[42deg] items-center justify-center rounded-full border border-black">
+                  <svg width="33" height="33" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2 13.5H25M25 13.5L13.5 2M25 13.5L13.5 25" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              </a>
+            </div>
+
+            <div class="mt-4 h-px w-full bg-[#d9d9d9]"></div>
+
+            {item.metrics && item.metrics.length > 0 && (
+              <div class="mt-4 grid grid-cols-2 gap-x-4 gap-y-3">
+                {item.metrics.slice(0, 2).map((metric, i) => (
+                  <div key={i}>
+                    <p class="font-body text-[12px] uppercase leading-5 text-black">
+                      {metric.label}
+                    </p>
+                    <p class="font-body text-[12px] uppercase leading-5 text-[#ef4924]">
+                      {metric.value}
+                    </p>
+                  </div>
+                ))}
+                {item.metrics.slice(2, 4).map((metric, i) => (
+                  <div key={i + 2}>
+                    <p class="font-body text-[12px] uppercase leading-5 text-black">
+                      {metric.label}
+                    </p>
+                    <p class="font-body text-[12px] uppercase leading-5 text-[#ef4924]">
+                      {metric.value}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  const initPortfolioFilter = () => {
+    const root = document.querySelector('[data-portfolio-grid]')
+    if (!root || root.dataset.initialized === 'true') return
+
+    const grid = root.querySelector('[data-portfolio-grid-items]')
+    const filterBtns = root.querySelectorAll('[data-filter]')
+    const cards = grid?.querySelectorAll('[data-category]')
+
+    if (!grid || !cards) return
+
+    filterBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const filter = btn.getAttribute('data-filter')
+
+        filterBtns.forEach((b) => b.setAttribute('data-active', 'false'))
+        btn.setAttribute('data-active', 'true')
+
+        cards.forEach((card) => {
+          const cat = card.getAttribute('data-category')
+          if (filter === 'all' || cat === filter) {
+            card.style.display = ''
+          } else {
+            card.style.display = 'none'
+          }
+        })
+      })
+    })
+
+    root.dataset.initialized = 'true'
+  }
+
+  document.addEventListener('astro:page-load', initPortfolioFilter)
+  initPortfolioFilter()
+</script>

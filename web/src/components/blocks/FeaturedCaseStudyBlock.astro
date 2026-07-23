@@ -1,0 +1,98 @@
+---
+import { CMS_URL } from 'astro:env/client'
+import Img from '@/components/Img.astro'
+import type { FeaturedCaseStudyBlock as FeaturedCaseStudyBlockType, Media } from 'cms/src/payload-types'
+
+type Props = FeaturedCaseStudyBlockType
+
+const {
+  eyebrow,
+  heading,
+  description,
+  ctaButton,
+  backgroundImage,
+  featuredImage,
+} = Astro.props
+
+const resolveUrl = (media: unknown): string => {
+  if (media && typeof media === 'object' && 'url' in media) {
+    const url = (media as { url?: string }).url
+    if (typeof url === 'string' && url.length > 0) {
+      return url.startsWith('/') ? `${CMS_URL}${url}` : url
+    }
+  }
+  return ''
+}
+
+const backgroundUrl = resolveUrl(backgroundImage)
+---
+
+<section class="relative isolate w-full overflow-hidden bg-white py-16 md:py-20 lg:py-24">
+  {backgroundUrl && (
+    <div class="absolute inset-0 overflow-hidden">
+      <img
+        src={backgroundUrl}
+        alt=""
+        class="h-full w-full object-cover object-center"
+        loading="eager"
+        aria-hidden="true"
+      />
+    </div>
+  )}
+
+  <div class="relative mx-auto max-w-[1795px]">
+    <div class="grid min-h-[560px] lg:grid-cols-[948px_1fr]">
+<div class="relative overflow-hidden">
+         {featuredImage && typeof featuredImage === 'object' && featuredImage?.filename && (
+           <div class="relative h-full min-h-[400px] lg:min-h-[560px]">
+             <Img
+               image={featuredImage as Media}
+               size="lg"
+               class="h-full w-full object-cover"
+               loading="eager"
+             />
+             <div class="absolute inset-0 bg-gradient-to-r from-black/10 to-transparent"></div>
+           </div>
+         )}
+       </div>
+
+      <div class="flex flex-col justify-center px-8 py-10 sm:px-12 sm:py-14 lg:px-16 lg:py-20 xl:px-20">
+        {eyebrow && (
+          <div class="mb-4">
+            <p class="text-sm font-semibold uppercase tracking-[0.25em] text-[#EF4924]">
+              {eyebrow}
+            </p>
+          </div>
+        )}
+
+        <h2 class="max-w-[636px] font-heading text-3xl font-normal leading-[1.1] text-black sm:text-4xl lg:text-[55px]">
+          {heading}
+        </h2>
+
+        <div class="mt-7 h-px w-full max-w-[626px] bg-black/15"></div>
+
+        {description && (
+          <div class="mt-6 max-w-[624px]">
+            <p class="text-base leading-8 text-[#606060] sm:text-[18px]">
+              {description}
+            </p>
+          </div>
+        )}
+
+        {ctaButton?.label && (
+          <a
+            href={ctaButton.link}
+            class="mt-8 inline-flex w-fit items-center gap-3 rounded-full border border-black/30 px-6 py-3 text-sm font-semibold uppercase tracking-[0.25em] text-black transition hover:border-[#EF4924] hover:text-[#EF4924]"
+          >
+            <span class="flex items-center gap-3">
+              <span class="flex h-[24px] w-[24px] rotate-[42deg] items-center justify-center text-lg">
+                ↗
+              </span>
+              <span>{ctaButton.label}</span>
+            </span>
+          </a>
+        )}
+      </div>
+    </div>
+  </div>
+</section>

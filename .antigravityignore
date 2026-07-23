@@ -1,0 +1,33 @@
+# Dependency directories
+node_modules/
+
+# Build outputs
+dist/
+.next/
+.astro/
+.vercel/
+out/
+build/
+
+# Media and static files
+public/
+assets/
+cms/media/
+
+# Logs and cache
+logs/
+*.log
+.cache/
+*.tsbuildinfo
+
+# IDE and Version Control
+.idea/
+.vscode/
+.git/
+
+# Package manager locks
+pnpm-lock.yaml
+
+# AI directories
+.claude/
+.claude_old/

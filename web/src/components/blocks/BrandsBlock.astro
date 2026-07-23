@@ -1,0 +1,40 @@
+---
+import Img from '@/components/Img.astro'
+import type { BrandsBlock as BrandsBlockType, Media } from 'cms/src/payload-types'
+
+type Props = BrandsBlockType
+
+const { heading, logos } = Astro.props
+const logosData = logos as { logo: Media }[]
+---
+<section class="w-full bg-white py-16 md:py-20 lg:py-24">
+  <div class="mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col items-center gap-8 lg:flex-row lg:items-center lg:gap-12">
+      {/* Left side - Heading */}
+      <div class="flex-shrink-0 lg:max-w-[280px]">
+        <h2
+          class="text-center text-2xl font-bold leading-tight text-slate-800 lg:text-left lg:text-[28px]"
+          style="font-family: var(--font-heading, inherit)"
+        >
+          {heading}
+        </h2>
+      </div>
+
+      {/* Vertical Divider */}
+      <div class="hidden h-16 w-px bg-gray-200 lg:block" aria-hidden="true"></div>
+
+      {/* Right side - Logos */}
+      <div class="flex flex-wrap items-center justify-center gap-8 md:gap-12 lg:flex-1 lg:justify-start lg:gap-16">
+{logosData.filter((item): item is { logo: Media } => typeof item.logo === 'object' && item.logo?.filename === true).map((item) => (
+           <div class="flex items-center justify-center">
+             <Img
+               image={item.logo}
+               size="sm"
+               class="h-auto max-h-12 w-auto object-contain opacity-70 grayscale transition-opacity duration-200 hover:opacity-100 hover:grayscale-0"
+             />
+           </div>
+         ))}
+       </div>
+    </div>
+  </div>
+</section>

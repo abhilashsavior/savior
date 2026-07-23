@@ -1,0 +1,67 @@
+---
+import Link from '@/components/Link.astro'
+import type { PricingSectionBlock as PricingSectionBlockType } from 'cms/src/payload-types'
+
+type Props = PricingSectionBlockType
+
+const { heading, headingHighlight, subheading, plans } = Astro.props
+const pricingPlans = plans || []
+---
+
+<section class="relative bg-black pt-24 pb-0 overflow-hidden">
+  <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 pt-[191px] pb-[542px]">
+    {subheading && (
+      <p class="text-center font-body text-[20px] font-normal leading-[36px] text-[#606060] mb-6 lg:mb-8">
+        {subheading}
+      </p>
+    )}
+    
+    {heading && (
+      <h2 class="text-center font-heading text-[50px] sm:text-[55px] lg:text-[55px] font-bold leading-[1.22] uppercase mb-12 lg:mb-16">
+        <span class="text-[#ef4924]">{heading}</span>
+        {headingHighlight && <span class="text-white"> {headingHighlight}</span>}
+      </h2>
+    )}
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-[1280px] mx-auto">
+      {pricingPlans.map((plan) => (
+        <div class="border border-[#ef4924] border-solid rounded-[5px] flex flex-col">
+          <div class="p-6 lg:p-8 flex-1 flex flex-col">
+            <h3 class="font-heading text-[38px] font-semibold text-black uppercase mb-2 text-center">
+              {plan.title}
+            </h3>
+            {plan.subtitle && (
+              <p class="font-body text-[16px] font-normal text-[#606060] mb-6 text-center">
+                {plan.subtitle}
+              </p>
+            )}
+            
+            <p class="font-heading text-[36px] font-semibold text-[#ef4924] mb-8 text-center">
+              {plan.price}
+            </p>
+
+            <ul class="space-y-4 mb-8 flex-1">
+              {plan.features?.map((feature) => (
+                <li class="flex items-start gap-3">
+                  <span class="flex-shrink-0 w-[11px] h-[11px] rounded-full bg-[#ef4924] mt-2"></span>
+                  <span class="font-body text-[16px] font-normal text-[#606060] leading-[33px]">
+                    {feature.text}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          
+          <div class="px-6 lg:px-8 pb-6 lg:pb-8">
+            <Link
+              path="#"
+              class="inline-flex items-center justify-center w-full h-[50px] bg-[#ef4924] text-white font-body text-[14px] font-semibold uppercase rounded-full hover:bg-[#e04419] transition-colors duration-200"
+            >
+              {plan.ctaLabel || 'Start plan'}
+            </Link>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

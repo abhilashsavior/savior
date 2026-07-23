@@ -1,0 +1,305 @@
+---
+import type { Page, Media, Post, Footer as CMSFooter } from 'cms/src/payload-types'
+import Link from '../components/Link.astro'
+import Img from '../components/Img.astro'
+import { payloadSDK } from '../cms/sdk'
+import { MapPin, Phone } from 'lucide-astro'
+
+// Extend the Footer type locally for type safety before types have finished generating.
+interface ExtendedFooter extends Partial<CMSFooter> {
+  logoText?: string
+  description?: string
+  socialLinks?: Array<{
+    platform: 'facebook' | 'linkedin' | 'behance' | 'instagram' | 'twitter' | 'youtube'
+    url: string
+  }>
+  talkTitle?: string
+  phone?: string
+  locationText?: string
+  address?: string
+  ctaTitle?: string
+  ctaButtonLabel?: string
+  ctaButtonUrl?: string
+  featuredPost?: string | Post | null
+  transparencyText?: string
+  copyright?: string
+  bottomLinks?: Array<{
+    id?: string
+    page: string | Page
+    label: string
+  }>
+  links?: Array<{
+    id?: string
+    page: string | Page
+    label: string
+  }>
+}
+
+const { locale, preview, header } = Astro.locals.globalState
+const footer = Astro.locals.globalState.footer as ExtendedFooter
+
+// Determine featured post data
+let featuredPostData: Post | null = null
+
+if (footer.featuredPost) {
+  featuredPostData = footer.featuredPost as Post
+} else {
+  try {
+    const response = await payloadSDK.request({
+      method: 'GET',
+      path: `/posts?limit=1&sort=-createdAt&locale=${locale}&draft=${preview}`,
+      init: {
+        headers: {
+          'X-Use-Cache': preview ? 'false' : 'true',
+        },
+      },
+    })
+    if (response.ok) {
+      const data = await response.json()
+      featuredPostData = data.docs?.[0] as Post
+    }
+  } catch (error) {
+    console.error('Error fetching latest post for footer:', error)
+  }
+}
+
+// Fallback social links if not defined in CMS
+const socialLinks = footer.socialLinks || [
+  { platform: 'facebook', url: 'https://facebook.com' },
+  { platform: 'linkedin', url: 'https://linkedin.com' },
+  { platform: 'behance', url: 'https://behance.net' },
+]
+
+// Fallback Quick Links
+const quickLinks = footer.links || []
+
+// Fallback bottom links
+const bottomLinks = footer.bottomLinks || []
+---
+
+<footer class="bg-primary text-white pt-[155px] pb-1 px-5">
+  <div class="savior-container mx-auto grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-16 lg:gap-[28px]">
+    
+    {/* Left and Middle Columns (2/3 width on desktop) */}
+    <div class=" grid grid-cols-1 md:grid-cols-[2fr_0.75fr_1.25fr] gap-12 md:gap-12 space-between">
+      
+      {/* Savior Brand Section */}
+      <div class="flex flex-col  gap-6">
+        <a href={`/${locale}`} class="flex items-center gap-2 group">
+          {header?.logo && typeof header.logo === 'object' && header.logo?.filename && header.logo?.mimeType?.startsWith('image/') ? (
+            <Img
+              image={header.logo as Media}
+              class="transition-all"
+            />
+          ) : (
+            <span class="text-3xl font-black tracking-tighter text-white uppercase select-none">
+              {footer.logoText || "Savior"}
+            </span>
+          )}
+        </a>
+        
+        <p class="text-white text-md leading-7 max-w-[308px] ">
+          {footer.description || "We are a dynamic, hands-on digital marketing service. Committed to helping businesses and entrepreneurs grow their business."}
+        </p>
+        
+        {/* Social Links */}
+        <div class="flex flex-wrap gap-4 items-center">
+          {socialLinks.map((link) => (
+            <a 
+              href={link.url} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="group flex items-center gap-2 text-white hover:text-white/90 transition-colors"
+            >
+              {link.platform === 'facebook' && (
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 24 24" class="group-hover:opacity-80 transition-colors w-4 h-4">
+                  <path d="M9 8H7v3h2v9h4v-9h3.6l.4-3H13V6c0-.5.5-1 1-1h2V2h-3a4 4 0 0 0-4 4v2z"/>
+                </svg>
+              )}
+              {link.platform === 'linkedin' && (
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 24 24" class="group-hover:opacity-80 transition-colors w-4 h-4">
+                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                </svg>
+              )}
+              {link.platform === 'behance' && (
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 24 24" class="group-hover:opacity-80 transition-colors w-4 h-4">
+                  <path d="M8.2 11.2c0 .9-.3 1.6-.9 2.1s-1.4.7-2.5.7H2V6h2.7c1 0 1.7.2 2.2.6s.8.9.8 1.6c0 .7-.3 1.2-.8 1.5.7.2 1.3.9 1.3 1.5zm-3.6-3.8h-1v2.1h1c.9 0 1.4-.4 1.4-1s-.5-1.1-1.4-1.1zm.2 4.4H3.6v2.3h1.2c.9 0 1.5-.4 1.5-1.1.1-.9-.5-1.2-1.5-1.2zm11.4-.4c0-.9-.2-1.8-.7-2.5s-1.2-1-2.2-1c-1 0-1.8.3-2.3 1s-.8 1.6-.8 2.5.3 1.8.8 2.5 1.3 1 2.3 1c1.4 0 2.4-.7 2.7-2.1h-1.6c-.2.5-.6.8-1.1.8-.8 0-1.2-.5-1.3-1.4h4.2v-.8zm-4.2-.9c0-.8.4-1.3 1.1-1.3s1.1.5 1.1 1.3h-2.2zm1-3.6h2.5v-.8h-2.5v.8z"/>
+                </svg>
+              )}
+              {link.platform === 'instagram' && (
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" class="group-hover:opacity-80 transition-colors w-4 h-4">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+              )}
+              {link.platform === 'twitter' && (
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 24 24" class="group-hover:opacity-80 transition-colors w-4 h-4">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+              )}
+              {link.platform === 'youtube' && (
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 24 24" class="group-hover:opacity-80 transition-colors w-4 h-4">
+                  <path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.525 3.545 12 3.545 12 3.545s-7.525 0-9.388.508a3.003 3.003 0 0 0-2.11 2.11C0 8.025 0 12 0 12s0 3.975.502 5.837a3.003 3.003 0 0 0 2.11 2.11C4.475 20.455 12 20.455 12 20.455s7.525 0 9.388-.508a3.003 3.003 0 0 0 2.11-2.11C24 15.975 24 12 24 12s0-3.975-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                </svg>
+              )}
+              <span class="text-md capitalize group-hover:opacity-80 transition-colors">{link.platform}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+      
+      {/* Quick Links Column */}
+      <div class="flex flex-col gap-6 ">
+        <div class="relative">
+          <p class="font-heading text-lg leading-7 font-semibold text-white uppercase">
+            Quick Links
+          </p>
+          <div class="h-px w-20 bg-white mt-2.5 rounded-full"></div>
+        </div>
+        
+        <ul class="flex flex-col gap-[2px] list-none p-0 m-0">
+          {quickLinks.map((link) => (
+            <li>
+              <Link 
+                path={(link.page as Page)?.path} 
+                class="text-md leading-6.5 text-white hover:opacity-80 transition-colors"
+              >
+                {link.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+      
+      {/* Let's Talk Column */}
+      <div class="flex flex-col gap-6 ">
+        <div class="relative">
+          <p class="font-heading text-lg leading-7 font-semibold text-white uppercase">
+            {footer.talkTitle || "Let's Talk"}
+          </p>
+          <div class="h-px w-20 bg-white mt-2.5 rounded-full"></div>
+        </div>
+        
+        <div class="flex flex-col gap-[2px]">
+          {footer.phone && (
+            <div class="flex items-center gap-2">
+             <Phone class=" w-4 h-4" />
+              
+              <a href={`tel:${footer.phone}`} class="text-md leading-6.5 text-white hover:opacity-80 transition-colors">
+                {footer.phone}
+              </a>
+            </div>
+          )}
+          
+          <div class="flex items-center gap-2">
+            
+            <span class="text-md leading-6.5 text-white transition-colors pl-6">
+              Made w/ <span class="text-xl">♥</span> in New York
+            </span>
+          </div>
+          
+          {footer.address && (
+            <div class="flex items-start">
+             <MapPin class="w-11 h-4 relative top-1"  />
+              <span class="text-md leading-6.5 text-white transition-colors">
+                {footer.address}
+              </span>
+            </div>
+          )}
+        </div>
+      </div>
+    
+    </div>
+    
+    {/* Right Column - Blog Post & CTA Box (1/3 width on desktop) */}
+    <div class="flex flex-col gap-8">
+      
+      {/* Featured Blog Post Card */}
+      {featuredPostData && (
+        <div class="w-full">
+          <Link path={featuredPostData.path} class="flex gap-4 group items-start">
+<div class="flex flex-col items-center w-24">
+               {featuredPostData.image && typeof featuredPostData.image === 'object' && featuredPostData.image?.filename ? (
+                 <Img
+                   image={featuredPostData.image as Media}
+                   size="xs"
+                   class="w-24 h-16 rounded-md object-cover bg-white/10 group-hover:scale-105 transition-transform duration-300"
+                 />
+               ) : (
+                <div class="w-24 h-16 rounded-md bg-white/10 flex items-center justify-center text-white/40 text-[10px]">
+                  No Image
+                </div>
+              )}
+              <span class="text-[9px] font-bold text-white/70 tracking-wider mt-2 uppercase text-center w-full whitespace-nowrap">
+                {new Date(featuredPostData.createdAt).toLocaleDateString(locale, {
+                  month: 'short',
+                  day: 'numeric',
+                  year: 'numeric',
+                })}
+              </span>
+            </div>
+            
+            <div class="flex-1">
+              <h4 class="font-bold text-xs text-white group-hover:text-white/80 transition-colors line-clamp-3 leading-snug">
+                {featuredPostData.title}
+              </h4>
+            </div>
+          </Link>
+        </div>
+      )}
+      
+      {/* Black CTA Box */}
+      <div class="bg-black p-8 flex flex-col items-center text-center gap-6 ">
+        <h3 class="text-[23px] leading-[38px] font-semibold text-white font-heading">
+          {/* Support formatting for "Increase Your Revenue" highlighting */}
+          {footer.ctaTitle ? (
+            <span set:html={String(footer.ctaTitle).replace("Increase Your Revenue", `<span class="text-primary text-[23px] leading-[38px] font-semibold">Increase Your Revenue</span>`) } />
+          ) : (
+            <span class="text-[23px] leading-[38px] font-semibold">
+              Learn 5 Website Fixes to <span class="text-primary text-[23px] leading-[38px] font-semibold">Increase Your Revenue.</span>
+            </span>
+          )}
+        </h3>
+        
+        <a 
+          href={footer.ctaButtonUrl || "#"} 
+          class="w-full text-center bg-primary hover:bg-primary-dark text-white font-black uppercase text-sm  p-[15px] rounded-full transition-all duration-200"
+        >
+          {footer.ctaButtonLabel || "Download Free eBook Now"}
+        </a>
+      </div>
+      
+    </div>
+    
+  </div>
+  
+  {/* Bottom Bar Section */}
+  <div class="savior-container mx-auto border-t border-white/25 pt-12 mt-4 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-4">
+    
+    <div class="text-white text-sm leading-7 order-2 md:order-1 text-center md:text-left">
+      {footer.transparencyText || "WE BELIEVE IN TRANSPARENCY"}
+    </div>
+    
+    <div class="text-white text-sm leading-7 order-3 md:order-2 text-center">
+      {footer.copyright || `© ${new Date().getFullYear()} Savior Marketing, LLC. All Rights Reserved.`}
+    </div>
+    
+    {/* Bottom Legal Links */}
+    {bottomLinks.length > 0 && (
+      <ul class="flex flex-wrap items-center justify-center gap-6 list-none p-0 m-0 order-1 md:order-3">
+        {bottomLinks.map((link) => (
+          <li>
+            <Link 
+              path={(link.page as Page)?.path} 
+              class="text-white text-sm leading-7"
+            >
+              {link.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    )}
+    
+  </div>
+</footer>

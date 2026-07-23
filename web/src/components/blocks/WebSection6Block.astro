@@ -1,0 +1,84 @@
+---
+import Img from '@/components/Img.astro'
+import type { WebSection6Block as WebSection6BlockType, Media } from 'cms/src/payload-types'
+
+type Props = WebSection6BlockType
+
+const { heading, highlightedText, items = [] } = Astro.props
+---
+
+<section class="w-full bg-white py-16 md:py-20 lg:py-[100px]">
+  <div class="mx-auto max-w-[1202px] px-4 sm:px-6 lg:px-8">
+    <p class="text-center font-heading text-[55px] font-normal leading-[67px] text-black mb-12 lg:mb-[75px]">
+      <span class="font-normal">{heading} </span>
+      {highlightedText && <span class="font-semibold">{highlightedText}</span>}
+    </p>
+
+    <div class="space-y-[70px]">
+      <div class="flex flex-col lg:flex-row gap-[35px] items-start w-full">
+        {items.slice(0, 3).map((item, index) => (
+          <div key={index} class="flex flex-col gap-[32px] w-full lg:w-[366px]">
+            <div class="h-0 relative shrink-0 w-full">
+              <div class="absolute inset-[-1px_0_0_0]">
+                <svg width="366" height="1" viewBox="0 0 366 1" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <line y1="0.5" x2="366" y2="0.5" stroke="#ededed" stroke-width="1"/>
+                </svg>
+              </div>
+            </div>
+            <div class="flex gap-[31px] items-start w-full">
+<div class="relative shrink-0 size-[46px]">
+                 {item.icon && typeof item.icon === 'object' && item.icon?.filename ? (
+                   <Img
+                     image={item.icon as Media}
+                     size="original"
+                     class="size-full object-contain"
+                   />
+                 ) : (
+                  <svg width="46" height="46" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="3" y="3" width="40" height="40" rx="23" stroke="black" stroke-width="2"/>
+                    <path d="M31 15L19 27L13 21" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                )}
+              </div>
+              <p class="font-heading font-semibold text-[22px] leading-[34px] text-black uppercase">
+                {item.text}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div class="flex flex-col lg:flex-row gap-[35px] items-start w-full">
+        {items.slice(3, 6).map((item, index) => (
+          <div key={index + 3} class="flex flex-col gap-[32px] w-full lg:w-[366px]">
+            <div class="h-0 relative shrink-0 w-full">
+              <div class="absolute inset-[-1px_0_0_0]">
+                <svg width="366" height="1" viewBox="0 0 366 1" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <line y1="0.5" x2="366" y2="0.5" stroke="#ededed" stroke-width="1"/>
+                </svg>
+              </div>
+            </div>
+            <div class="flex gap-[31px] items-start w-full">
+<div class="relative shrink-0 size-[46px]">
+                 {item.icon && typeof item.icon === 'object' && item.icon?.filename ? (
+                   <Img
+                     image={item.icon as Media}
+                     size="original"
+                     class="size-full object-contain"
+                   />
+                 ) : (
+                  <svg width="46" height="46" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="3" y="3" width="40" height="40" rx="23" stroke="black" stroke-width="2"/>
+                    <path d="M31 15L19 27L13 21" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                )}
+              </div>
+              <p class="font-heading font-semibold text-[22px] leading-[34px] text-black uppercase">
+                {item.text}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

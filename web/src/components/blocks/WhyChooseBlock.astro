@@ -1,0 +1,138 @@
+---
+import Link from '@/components/Link.astro'
+import type { WhyChooseBlock as WhyChooseBlockType, Page } from 'cms/src/payload-types'
+
+type Props = WhyChooseBlockType
+
+const { heading, items } = Astro.props
+const whyChooseItems = items || []
+---
+
+<section class="w-full bg-white py-16 md:py-20 lg:py-[100px]" data-accordion-root>
+  <div class="mx-auto max-w-[1202px] px-4 sm:px-6 lg:px-8">
+    <h2 class="text-center font-heading text-[28px] sm:text-[40px] lg:text-[55px] font-normal leading-[1.22] text-slate-900 mb-12 lg:mb-[75px]">
+      {heading}
+    </h2>
+
+    <div class="space-y-0">
+      {whyChooseItems.map((item, index) => {
+        const isExpanded = item.isExpanded
+        const ctaLink = item.ctaButton?.externalUrl || ((item.ctaButton?.link as Page)?.path ?? '#')
+
+        return (
+          <div
+            key={index}
+            class="border-t border-gray-200 first:border-t-0"
+            data-accordion-item
+            data-expanded={isExpanded ? 'true' : 'false'}
+          >
+            <div class="flex items-start justify-between py-6 lg:py-10 cursor-pointer" data-accordion-trigger>
+              <div class="flex items-start gap-4 lg:gap-[55px] flex-1">
+                <span class="font-heading text-[28px] sm:text-[40px] lg:text-[55px] font-bold text-[#606060] leading-none shrink-0">
+                  {item.number}
+                </span>
+                <div>
+                  <h3 class="font-heading text-lg sm:text-xl lg:text-[22px] font-semibold text-slate-900 mb-2">
+                    {item.title}
+                  </h3>
+                  <div class="overflow-hidden transition-all duration-300 max-h-0" data-accordion-content>
+                    <div class="pb-4">
+                      <p class="font-body text-base leading-7 text-[#606060] max-w-[736px]">
+                        {item.description}
+                      </p>
+                      {item.showCta && (
+                        <div class="mt-6 flex flex-wrap items-center gap-[17px]">
+                          {item.ctaButton?.label && (
+                            <Link
+                              path={ctaLink}
+                              class="inline-flex items-center justify-center px-10 py-3.75 bg-[#ff4d1c] text-white font-semibold text-sm uppercase tracking-wide rounded-full hover:bg-[#e64418] transition-colors duration-200"
+                            >
+                              {item.ctaButton.label}
+                            </Link>
+                          )}
+                          <span class="text-sm font-semibold uppercase text-gray-400">or</span>
+                          {item.phoneCta?.phone && (
+                            <a
+                              href={`tel:${item.phoneCta.phone}`}
+                              class="inline-flex items-center gap-[9px] group"
+                            >
+                              <span class="flex items-center justify-center size-[50px] rounded-full border border-black">
+                                <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <path d="M21.5 16.08V19.5C21.5 19.831 21.3683 20.149 21.1337 20.3837C20.899 20.6183 20.581 20.75 20.25 20.75C17.374 20.432 14.6135 19.4624 12.22 17.93C9.98699 16.5218 8.10545 14.6403 6.69724 12.4073C5.15604 10.0016 4.18585 7.2264 3.878 4.34375C3.86465 4.19511 3.87705 4.04519 3.91454 3.90128C3.95204 3.75736 4.01385 3.62196 4.09683 3.50155C4.17981 3.38113 4.28238 3.27783 4.39924 3.19659C4.5161 3.11536 4.64514 3.05764 4.781 3.02625L8.201 2.28475C8.4668 2.22638 8.74344 2.24446 8.99905 2.33693C9.25466 2.4294 9.47909 2.59232 9.64721 2.80705L11.9242 5.68605C12.2644 6.10935 12.3213 6.69356 12.0722 7.175L10.8792 9.561C12.3125 11.9009 14.2369 13.8254 16.5768 15.2587L18.9628 14.0657C19.4442 13.8166 20.0284 13.8735 20.4517 14.2137L23.3307 16.4907C23.5454 16.6589 23.7084 16.8833 23.8008 17.1389C23.8933 17.3945 23.9114 17.6712 23.853 17.937L23.1115 21.357C22.9784 21.9518 22.6016 22.4549 22.1072 22.757C21.6128 23.059 21.0437 23.1319 20.5 22.9587" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                              </span>
+                              {item.phoneCta.label && <span class="text-sm font-semibold uppercase text-black">{item.phoneCta.label}</span>}
+                            </a>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="shrink-0 mt-2">
+                <svg
+                  class="w-6 h-6 text-gray-400 transition-transform duration-300"
+                  data-accordion-icon
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </div>
+            </div>
+          </div>
+        )
+      })}
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  const initAccordion = () => {
+    const root = document.querySelector('[data-accordion-root]')
+    if (!root || root.dataset.initialized === 'true') return
+
+    root.querySelectorAll('[data-accordion-item]').forEach((item) => {
+      const trigger = item.querySelector('[data-accordion-trigger]')
+      const content = item.querySelector('[data-accordion-content]')
+      const icon = item.querySelector('[data-accordion-icon]')
+
+      if (!trigger || !content) return
+
+      const isInitiallyExpanded = item.dataset.expanded === 'true'
+      if (isInitiallyExpanded) {
+        content.style.maxHeight = content.scrollHeight + 'px'
+        if (icon) icon.style.transform = 'rotate(90deg)'
+      }
+
+      trigger.addEventListener('click', () => {
+        const isOpen = item.dataset.expanded === 'true'
+
+        root.querySelectorAll('[data-accordion-item]').forEach((other) => {
+          const otherContent = other.querySelector('[data-accordion-content]')
+          const otherIcon = other.querySelector('[data-accordion-icon]')
+          other.dataset.expanded = 'false'
+          if (otherContent) otherContent.style.maxHeight = '0'
+          if (otherIcon) otherIcon.style.transform = 'rotate(0deg)'
+        })
+
+        if (!isOpen) {
+          item.dataset.expanded = 'true'
+          content.style.maxHeight = content.scrollHeight + 'px'
+          if (icon) icon.style.transform = 'rotate(90deg)'
+        }
+      })
+    })
+
+    root.dataset.initialized = 'true'
+  }
+
+  document.addEventListener('astro:page-load', initAccordion)
+  initAccordion()
+</script>

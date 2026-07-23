@@ -1,0 +1,170 @@
+---
+import { CMS_URL } from 'astro:env/client'
+import Link from '@/components/Link.astro'
+import type { CaseStudyCarouselBlock as CaseStudyCarouselBlockType } from 'cms/src/payload-types'
+
+type Props = CaseStudyCarouselBlockType
+
+const { sectionHeading, sectionSubheading, backgroundImage, caseStudies = [] } = Astro.props
+const carouselId = `case-study-carousel-${Math.random().toString(36).slice(2, 10)}`
+
+const fallbackBackgroundImageUrl =
+  'https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1600&q=80'
+
+const resolvedBackgroundImageUrl = (() => {
+  if (backgroundImage && typeof backgroundImage === 'object' && backgroundImage !== null && 'url' in backgroundImage) {
+    const imageUrl = backgroundImage.url
+
+    if (typeof imageUrl === 'string' && imageUrl.length > 0) {
+      return imageUrl.startsWith('/') ? `${CMS_URL}${imageUrl}` : imageUrl
+    }
+  }
+
+  return fallbackBackgroundImageUrl
+})()
+---
+
+<section class="relative isolate w-full overflow-hidden bg-[#f8f5ef] py-16 md:py-20 lg:py-24" id={carouselId}>
+  <div class="absolute left-0 top-0 h-full w-full overflow-hidden">
+    <img
+      src={resolvedBackgroundImageUrl}
+      alt=""
+      class="h-full w-full object-cover object-center"
+      style="object-position: 70% center;"
+      loading="eager"
+      aria-hidden="true"
+    />
+  </div>
+
+  <div class="relative mx-auto max-w-[1795px] px-4 py-4 pl-0 sm:px-6 sm:py-6 sm:pl-0 lg:px-8 lg:py-8 lg:pl-0 xl:px-0">
+    <div class="relative">
+      <div class="overflow-hidden bg-transparent shadow-none">
+        <div class="flex transition-transform duration-500 ease-out" data-track>
+          {caseStudies.map((item, index) => {
+            const ctaHref = item.ctaButton?.link ?? '#'
+            const leftTitle = item.heading || sectionHeading || 'Partanburg, South Carolina Roofing Case Study'
+            const leftDescription =
+              item.description ||
+              sectionSubheading ||
+              'In a period of 3 months we were able to acquire 817 Conversion Actions, decrease the CPA to $7.95, increase the conversion rate to 21.81% and establish your brand as an authority.'
+
+            return (
+              <article class="w-full shrink-0" data-slide data-index={index}>
+                <div class="grid min-h-[560px] gap-0 lg:grid-cols-[0.8fr_1.2fr]">
+                  <div class="flex flex-col justify-center px-8 py-10 sm:px-10 sm:py-12 lg:px-[133px] lg:py-[142px]">
+                    <h2 class="max-w-[636px] font-['Montserrat'] text-3xl font-normal leading-[1.1] text-white sm:text-4xl lg:text-[55px]">
+                      {sectionHeading || 'Advantages of Hero Marketing from Savior'}
+                    </h2>
+
+                    <div class="mt-7 h-px w-full max-w-[626px] bg-white/45"></div>
+
+                    <div class="mt-6 max-w-[666px]">
+                      <h3 class="text-[20px] font-semibold uppercase tracking-[0.18em] text-white">
+                        {leftTitle}
+                      </h3>
+                    </div>
+
+                    <div class="mt-6 h-px w-full max-w-[626px] bg-white/45"></div>
+
+                    <div class="mt-6 max-w-[624px]">
+                      <p class="text-base leading-8 text-white/90 sm:text-[18px]">
+                        {leftDescription}
+                      </p>
+                    </div>
+
+                    <a
+                      href={ctaHref}
+                      class="elementor-button elementor-button-link elementor-size-sm mt-8 inline-flex w-fit items-center gap-3 rounded-full border border-white/80 px-6 py-3 text-sm font-semibold uppercase tracking-[0.25em] text-white transition hover:border-[#EF4924] hover:bg-white/10"
+                    >
+                      <span class="elementor-button-content-wrapper flex items-center gap-3">
+                        <span class="elementor-button-icon flex h-[24px] w-[24px] rotate-[42deg] items-center justify-center text-lg">
+                          ↗
+                        </span>
+                        <span class="elementor-button-text">Read Case Study</span>
+                      </span>
+                    </a>
+                  </div>
+
+                  <div class="flex items-center justify-center bg-transparent px-8 py-8 sm:px-10 lg:px-[70px] lg:py-[70px]">
+                    <div class="w-full max-w-[448px] bg-white p-8 shadow-[0_25px_70px_rgba(15,23,42,0.14)]">
+                      <blockquote class="mt-6 text-xl leading-8 text-[#606060]">
+                        “{item.testimonial?.quote || 'The process was smooth, thoughtful, and really helped us position the business with clarity.'}”
+                      </blockquote>
+
+                      {item.testimonial?.author && (
+                        <div class="mt-8 border-t border-slate-200 pt-5">
+                          <p class="text-lg font-semibold text-slate-900">{item.testimonial.author}</p>
+                          <p class="mt-1 text-sm text-slate-500">{item.eyebrow || 'Verified client'}</p>
+                        </div>
+                      )}
+
+
+                    </div>
+                  </div>
+                </div>
+              </article>
+            )
+          })}
+        </div>
+      </div>
+
+      {caseStudies.length > 1 && (
+        <div class="absolute inset-y-0 left-3 right-3 flex items-center justify-between gap-4 md:left-4 md:right-4 lg:left-[-12px] lg:right-[-12px]">
+          <button
+            type="button"
+            data-prev
+            class="inline-flex h-[74px] w-[74px] items-center justify-center rounded-full border border-white/80 bg-white/10 text-white shadow-lg transition hover:-translate-y-0.5 hover:border-[#EF4924] hover:bg-white/20"
+            aria-label="Previous case study"
+          >
+            <span class="text-xl leading-none">←</span>
+          </button>
+
+          <button
+            type="button"
+            data-next
+            class="inline-flex h-[74px] w-[74px] items-center justify-center rounded-full border border-white/80 bg-white/10 text-white shadow-lg transition hover:-translate-y-0.5 hover:border-[#EF4924] hover:bg-white/20"
+            aria-label="Next case study"
+          >
+            <span class="text-xl leading-none">→</span>
+          </button>
+        </div>
+      )}
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  const initCarousel = () => {
+    const carousel = document.getElementById('${carouselId}')
+    if (!carousel || carousel.dataset.initialized === 'true') return
+
+    const track = carousel.querySelector('[data-track]')
+    const slides = Array.from(carousel.querySelectorAll('[data-slide]'))
+    const prevButton = carousel.querySelector('[data-prev]')
+    const nextButton = carousel.querySelector('[data-next]')
+
+    if (!track || slides.length === 0) return
+
+    let currentIndex = 0
+
+    const updateCarousel = () => {
+      track.style.transform = `translateX(-${currentIndex * 100}%)`
+    }
+
+    prevButton?.addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + slides.length) % slides.length
+      updateCarousel()
+    })
+
+    nextButton?.addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % slides.length
+      updateCarousel()
+    })
+
+    updateCarousel()
+    carousel.dataset.initialized = 'true'
+  }
+
+  document.addEventListener('astro:page-load', initCarousel)
+  initCarousel()
+</script>

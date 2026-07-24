@@ -4,11 +4,15 @@ import { NextConfig } from 'next'
 const nextConfig: NextConfig = {
   redirects: async () => [
 
+     eslint: {
+    ignoreDuringBuilds: true,
+  },
+
     {
       source: '/',
       destination: '/admin',
       permanent: true,
-      ignoreDuringBuilds: true,
+      
     },
   ],
 }

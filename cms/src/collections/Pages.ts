@@ -50,8 +50,8 @@ const canReadPage: Access = ({ req: { user }, doc }: AccessArgs<User>) => {
   
   // Check for login block when doc is available
   if (doc?.sections) {
-    const hasLoginBlock = doc.sections.some((section: unknown) => 
-      section?.blocks?.some((block: unknown) => block?.blockType === 'login')
+    const hasLoginBlock = doc.sections.some((section: any) => 
+      section?.blocks?.some((block: any) => block?.blockType === 'login')
     )
     if (hasLoginBlock) return true
   }

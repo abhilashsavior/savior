@@ -1,23 +1,23 @@
 import { withPayload } from '@payloadcms/next/withPayload'
-import { NextConfig } from 'next'
+import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  redirects: async () => [
-
-     eslint: {
+  eslint: {
     ignoreDuringBuilds: true,
   },
 
+  redirects: async () => [
     {
       source: '/',
       destination: '/admin',
       permanent: true,
-      
     },
   ],
 }
 
-const config = withPayload(nextConfig, { devBundleServerPackages: false })
+const config = withPayload(nextConfig, {
+  devBundleServerPackages: false,
+})
 
 if (process.env.TURBOPACK || process.argv.includes('--turbopack')) {
   delete config.webpack

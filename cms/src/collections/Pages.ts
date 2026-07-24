@@ -36,7 +36,7 @@ import FaqSectionBlock from '@/blocks/FaqSectionBlock'
 import { heroSection } from '@/fields/heroSection'
 import { authenticated } from '@/shared/access/authenticated'
 import type { Access, AccessArgs } from 'payload'
-import type { User } from '../../payload-types'
+import type { User } from '../payload-types'
 import { CollectionGroups } from '@/shared/CollectionGroups'
 import { PageCollectionConfig } from '@jhb.software/payload-pages-plugin'
 

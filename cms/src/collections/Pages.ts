@@ -40,23 +40,33 @@ import type { User } from '../payload-types'
 import { CollectionGroups } from '@/shared/CollectionGroups'
 import { PageCollectionConfig } from '@jhb.software/payload-pages-plugin'
 
-// Allow public access to pages with login block or marked as public
-const canReadPage: Access = ({ req: { user }, doc }: AccessArgs<User>) => {
-  // Allow if user is authenticated
+// // Allow public access to pages with login block or marked as public
+// const canReadPage: Access = ({ req: { user }, doc }: AccessArgs<User>) => {
+//   // Allow if user is authenticated
+//   if (user) return true
+  
+//   // Allow public access to pages marked as public
+//   if (doc?.public === true) return true
+  
+//   // Check for login block when doc is available
+//   if (doc?.sections) {
+//     const hasLoginBlock = doc.sections.some((section: any) => 
+//       section?.blocks?.some((block: any) => block?.blockType === 'login')
+//     )
+//     if (hasLoginBlock) return true
+//   }
+  
+//   return false
+// }
+
+const canReadPage: Access = ({ req: { user } }) => {
   if (user) return true
-  
-  // Allow public access to pages marked as public
-  if (doc?.public === true) return true
-  
-  // Check for login block when doc is available
-  if (doc?.sections) {
-    const hasLoginBlock = doc.sections.some((section: any) => 
-      section?.blocks?.some((block: any) => block?.blockType === 'login')
-    )
-    if (hasLoginBlock) return true
+
+  return {
+    public: {
+      equals: true,
+    },
   }
-  
-  return false
 }
 
 const Pages: PageCollectionConfig = {

@@ -477,7 +477,8 @@ export async function seedCMS(payload: Payload, force: boolean = false) {
             blocks: [
               {
                 blockType: 'blog-posts',
-                posts: [], // virtual field
+                heading: 'Latest Blog Posts',
+                posts: [],
               },
             ],
           },

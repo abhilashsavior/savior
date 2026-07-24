@@ -123,7 +123,7 @@ export default buildConfig({
     // see https://vercel.com/guides/connection-pooling-with-functions
     // attachDatabasePool is Vercel-specific — skip in local dev to avoid errors
     ...(process.env.VERCEL
-      ? { afterOpenConnection: async (adapter) => attachDatabasePool(adapter.connection.getClient()) }
+      ? { afterOpenConnection: async (adapter: any) => attachDatabasePool(adapter.connection.getClient()) }
       : {}),
   }),
   // Only configure email adapter when the API key is set (not needed in local dev)

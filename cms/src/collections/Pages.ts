@@ -84,6 +84,7 @@ const Pages: PageCollectionConfig = {
     update: authenticated,
     delete: authenticated,
     create: authenticated,
+    publish: authenticated,
   },
   page: {
     parent: {

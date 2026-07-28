@@ -111,10 +111,20 @@ export default buildConfig({
     ],
   }),
   secret: process.env.PAYLOAD_SECRET || '',
-  csrf:
-    process.env.NODE_ENV === 'production'
-      ? ['https://cms.your-website.com']
-      : ['http://localhost:3000'],
+  csrf: (() => {
+    const origins = new Set<string>()
+    origins.add('http://localhost:3000')
+    if (process.env.VERCEL_URL) {
+      origins.add(`https://${process.env.VERCEL_URL}`)
+    }
+    if (process.env.NEXT_PUBLIC_FRONTEND_URL) {
+      origins.add(new URL(process.env.NEXT_PUBLIC_FRONTEND_URL).origin)
+    }
+    if (process.env.CSRF_ALLOW_ORIGIN) {
+      origins.add(process.env.CSRF_ALLOW_ORIGIN)
+    }
+    return [...origins]
+  })(),
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },

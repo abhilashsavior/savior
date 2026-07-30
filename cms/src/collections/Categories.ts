@@ -1,3 +1,4 @@
+import { authenticated } from '@/shared/access/authenticated'
 import { CollectionGroups } from '@/shared/CollectionGroups'
 import type { CollectionConfig } from 'payload'
 
@@ -6,6 +7,12 @@ const Categories: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
     group: CollectionGroups.ContentCollections,
+  },
+  access: {
+    read: () => true,
+    create: authenticated,
+    update: authenticated,
+    delete: authenticated,
   },
   fields: [
     {

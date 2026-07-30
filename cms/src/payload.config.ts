@@ -111,7 +111,16 @@ export default buildConfig({
       LinkFeature({ enabledCollections: pageCollectionsSlugs }),
     ],
   }),
-  secret: process.env.PAYLOAD_SECRET || '',
+  secret: (() => {
+    const secret = process.env.PAYLOAD_SECRET
+    if (!secret) {
+      if (process.env.VERCEL) {
+        throw new Error('PAYLOAD_SECRET environment variable is required on Vercel. Set it in your Vercel project settings.')
+      }
+      console.warn('WARNING: PAYLOAD_SECRET is not set. Using empty string. This is insecure and will cause authentication failures.')
+    }
+    return secret || ''
+  })(),
   csrf: (() => {
     const origins = new Set<string>()
     origins.add('http://localhost:3000')
@@ -130,7 +139,13 @@ export default buildConfig({
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
   db: mongooseAdapter({
-    url: process.env.MONGODB_URI!,
+    url: (() => {
+      const uri = process.env.MONGODB_URI
+      if (!uri && process.env.VERCEL) {
+        throw new Error('MONGODB_URI environment variable is required on Vercel. Set it in your Vercel project settings.')
+      }
+      return uri || ''
+    })(),
     // see https://vercel.com/guides/connection-pooling-with-functions
     // attachDatabasePool is Vercel-specific — skip in local dev to avoid errors
     ...(process.env.VERCEL

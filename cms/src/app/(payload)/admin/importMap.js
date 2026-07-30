@@ -34,7 +34,9 @@ import { PreviewComponent as PreviewComponent_a8a977ebc872c5d5ea7ee689724c0860 }
 import { BlocksFeatureClient as BlocksFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { RelationshipFeatureClient as RelationshipFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { DashboardView as DashboardView_f1b43199350a850613851a7d2ee73dfe } from '../../../components/views/DashboardView'
+import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
+/** @type import('payload').ImportMap */
 export const importMap = {
   "@jhb.software/payload-pages-plugin/server#IsRootPageField": IsRootPageField_817212d6f65b4eb37176541413db3f8c,
   "@jhb.software/payload-pages-plugin/server#SlugField": SlugField_817212d6f65b4eb37176541413db3f8c,
@@ -71,5 +73,6 @@ export const importMap = {
   "@payloadcms/plugin-seo/client#PreviewComponent": PreviewComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@payloadcms/richtext-lexical/client#BlocksFeatureClient": BlocksFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#RelationshipFeatureClient": RelationshipFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
-  "/components/views/DashboardView#DashboardView": DashboardView_f1b43199350a850613851a7d2ee73dfe
+  "/components/views/DashboardView#DashboardView": DashboardView_f1b43199350a850613851a7d2ee73dfe,
+  "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }

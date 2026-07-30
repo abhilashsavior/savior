@@ -33,7 +33,6 @@ const Authors: PageCollectionConfig = {
     update: authenticated,
     delete: authenticated,
     create: authenticated,
-    publish: authenticated,
   },
   fields: [
     // Body fields:

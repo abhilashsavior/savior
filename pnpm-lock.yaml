@@ -38,6 +38,9 @@ importers:
       '@payloadcms/ui':
         specifier: 3.86.0
         version: 3.86.0(@types/react@19.2.0)(monaco-editor@0.52.2)(next@15.5.9(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.77.4))(payload@3.86.0(graphql@16.11.0)(typescript@5.9.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.3)
+      '@vercel/blob':
+        specifier: ^2.6.1
+        version: 2.6.1
       '@vercel/functions':
         specifier: ^3.3.4
         version: 3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0)
@@ -98,7 +101,7 @@ importers:
     dependencies:
       '@astrojs/vercel':
         specifier: ^8.2.11
-        version: 8.2.11(@aws-sdk/credential-provider-web-identity@3.901.0)(astro@5.18.1(@types/node@25.7.0)(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.7.0)(lightningcss@1.32.0)(rollup@4.62.3)(sass@1.77.4)(tsx@4.22.4)(typescript@6.0.3)(yaml@2.9.0))(next@15.5.9(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.77.4))(react@19.2.3)(rollup@4.62.3)
+        version: 8.2.11(@aws-sdk/credential-provider-web-identity@3.901.0)(astro@5.18.1(@types/node@25.7.0)(@vercel/blob@2.6.1)(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.7.0)(lightningcss@1.32.0)(rollup@4.62.3)(sass@1.77.4)(tsx@4.22.4)(typescript@6.0.3)(yaml@2.9.0))(next@15.5.9(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.77.4))(react@19.2.3)(rollup@4.62.3)
       '@fontsource-variable/montserrat':
         specifier: ^5.2.8
         version: 5.2.8
@@ -107,7 +110,7 @@ importers:
         version: 5.2.7
       '@jhb.software/astro-payload-richtext-lexical':
         specifier: 0.3.1
-        version: 0.3.1(astro@5.18.1(@types/node@25.7.0)(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.7.0)(lightningcss@1.32.0)(rollup@4.62.3)(sass@1.77.4)(tsx@4.22.4)(typescript@6.0.3)(yaml@2.9.0))
+        version: 0.3.1(astro@5.18.1(@types/node@25.7.0)(@vercel/blob@2.6.1)(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.7.0)(lightningcss@1.32.0)(rollup@4.62.3)(sass@1.77.4)(tsx@4.22.4)(typescript@6.0.3)(yaml@2.9.0))
       '@payloadcms/live-preview':
         specifier: 3.86.0
         version: 3.86.0
@@ -116,10 +119,10 @@ importers:
         version: 3.86.0(graphql@16.11.0)(typescript@6.0.3)
       astro:
         specifier: ^5.18.1
-        version: 5.18.1(@types/node@25.7.0)(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.7.0)(lightningcss@1.32.0)(rollup@4.62.3)(sass@1.77.4)(tsx@4.22.4)(typescript@6.0.3)(yaml@2.9.0)
+        version: 5.18.1(@types/node@25.7.0)(@vercel/blob@2.6.1)(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.7.0)(lightningcss@1.32.0)(rollup@4.62.3)(sass@1.77.4)(tsx@4.22.4)(typescript@6.0.3)(yaml@2.9.0)
       astro-seo-schema:
         specifier: ^5.2.0
-        version: 5.2.0(astro@5.18.1(@types/node@25.7.0)(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.7.0)(lightningcss@1.32.0)(rollup@4.62.3)(sass@1.77.4)(tsx@4.22.4)(typescript@6.0.3)(yaml@2.9.0))(schema-dts@1.1.5)
+        version: 5.2.0(astro@5.18.1(@types/node@25.7.0)(@vercel/blob@2.6.1)(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.7.0)(lightningcss@1.32.0)(rollup@4.62.3)(sass@1.77.4)(tsx@4.22.4)(typescript@6.0.3)(yaml@2.9.0))(schema-dts@1.1.5)
       cms:
         specifier: workspace:*
         version: link:../cms
@@ -128,7 +131,7 @@ importers:
         version: 1.3.0
       lucide-astro:
         specifier: ^0.544.0
-        version: 0.544.0(astro@5.18.1(@types/node@25.7.0)(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.7.0)(lightningcss@1.32.0)(rollup@4.62.3)(sass@1.77.4)(tsx@4.22.4)(typescript@6.0.3)(yaml@2.9.0))
+        version: 0.544.0(astro@5.18.1(@types/node@25.7.0)(@vercel/blob@2.6.1)(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.7.0)(lightningcss@1.32.0)(rollup@4.62.3)(sass@1.77.4)(tsx@4.22.4)(typescript@6.0.3)(yaml@2.9.0))
       payload:
         specifier: ^3.86.0
         version: 3.86.0(graphql@16.11.0)(typescript@6.0.3)
@@ -2739,6 +2742,17 @@ packages:
       vue-router:
         optional: true
 
+  '@vercel/blob@2.6.1':
+    resolution: {integrity: sha512-KTJytw85j1XQBxjN5d6UXI7fIWNQe1jotn4nWN+0hePqLs+Qi1B3jHdQcSKFGF0m2rsy9uhPT6GOXMtHe3qNzg==}
+    engines: {node: '>=20.0.0'}
+
+  '@vercel/cli-config@0.2.1':
+    resolution: {integrity: sha512-RhfyXmRLHdbnry8RJqHDc+5rGxMZ0bu+fpysZjtv3bE+BubpuwxTancHOKiH5zKQREsdwFVr3mOI2kOvxlOyxA==}
+
+  '@vercel/cli-exec@1.0.0':
+    resolution: {integrity: sha512-kQF8LGie/Hbdq9/psJxLE7owRTcqMQMhgybU04gCeR7cbQAr5t8OrjefDNColJv1QSSucFt4pLwRiARVmlOnug==}
+    engines: {node: '>= 18'}
+
   '@vercel/functions@2.2.13':
     resolution: {integrity: sha512-14ArBSIIcOBx9nrEgaJb4Bw+en1gl6eSoJWh8qjifLl5G3E4dRXCFOT8HP+w66vb9Wqyd1lAQBrmRhRwOj9X9A==}
     engines: {node: '>= 18'}
@@ -2768,6 +2782,10 @@ packages:
 
   '@vercel/oidc@3.0.5':
     resolution: {integrity: sha512-fnYhv671l+eTTp48gB4zEsTW/YtRgRPnkI2nT7x6qw5rkI1Lq2hTmQIpHPgyThI0znLK+vX2n9XxKdXZ7BUbbw==}
+    engines: {node: '>= 20'}
+
+  '@vercel/oidc@3.8.1':
+    resolution: {integrity: sha512-ufdalm2MWOYksyj8KVpWjoOFPJO6zoYpuyvIggIQ2bB0CFCjTCiTkGXHqAKwG77GVRjOaN3/8S5ITlZpXWmqOw==}
     engines: {node: '>= 20'}
 
   '@vercel/routing-utils@5.3.3':
@@ -2942,6 +2960,9 @@ packages:
   async-function@1.0.0:
     resolution: {integrity: sha512-hsU18Ae8CDTR6Kgu9DYf0EbCr/a5iGL0rytQDobUcdpYOKokk8LEjVphnXkDkgpi0wYVsqrXuP0bZxJaTqdgoA==}
     engines: {node: '>= 0.4'}
+
+  async-retry@1.3.3:
+    resolution: {integrity: sha512-wfr/jstw9xNi/0teMHrRW7dsz3Lt5ARhYNZ2ewpadnhaIp5mbALhOAP+EAdsC7t4Z6wqsDVv9+W6gm1Dk9mEyw==}
 
   async-sema@3.1.1:
     resolution: {integrity: sha512-tLRNUXati5MFePdAk8dw7Qt7DpxPB60ofAgn8WRhW6a2rcimZnYBP9oxHiv0OHy+Wz7kPMG+t4LGdt31+4EmGg==}
@@ -3623,6 +3644,10 @@ packages:
     resolution: {integrity: sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==}
     engines: {node: '>=0.8.x'}
 
+  execa@5.1.1:
+    resolution: {integrity: sha512-8uSpZZocAZRBAPIEINJj3Lo9HyGitllczc27Eh5YYojjMFMn8yHMDMaUHE2Jqfq05D/wucwI4JGURyXt1vchyg==}
+    engines: {node: '>=10'}
+
   expand-tilde@2.0.2:
     resolution: {integrity: sha512-A5EmesHW6rfnZ9ysHQjPdJRni0SRar0tjtG5MNtm9n5TUvsYU8oozprtRD4AqHxcZWWlVuAmQo2nWKfN9oyjTw==}
     engines: {node: '>=0.10.0'}
@@ -3767,6 +3792,10 @@ packages:
   get-proto@1.0.1:
     resolution: {integrity: sha512-sTSfBjoXBp89JvIKIefqw7U2CCebsc74kiY6awiGogKtoSGbgjYE/G/+l9sF3MWFPNc9IcoOC4ODfKHfxFmp0g==}
     engines: {node: '>= 0.4'}
+
+  get-stream@6.0.1:
+    resolution: {integrity: sha512-ts6Wi+2j3jQjqi70w5AlN8DFnkSwC+MqmxEzdEALB2qXZYV3X/b1CTfgPLGJNMeAWxdPfU8FO1ms3NUfaHCPYg==}
+    engines: {node: '>=10'}
 
   get-symbol-description@1.1.0:
     resolution: {integrity: sha512-w9UMqWwJxHNOvoNzSJ2oPF5wvYcvP7jUvYzhp67yEhTi17ZDBBC1z9pTdGuzjD+EFIqLSYRweZjqfiPzQ06Ebg==}
@@ -3934,6 +3963,10 @@ packages:
     resolution: {integrity: sha512-vK9P5/iUfdl95AI+JVyUuIcVtd4ofvtrOr3HNtM2yxC9bnMbEdp3x01OhQNnjb8IJYi38VlTE3mBXwcfvywuSw==}
     engines: {node: '>= 14'}
 
+  human-signals@2.1.0:
+    resolution: {integrity: sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==}
+    engines: {node: '>=10.17.0'}
+
   ieee754@1.2.1:
     resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}
 
@@ -4013,6 +4046,10 @@ packages:
   is-buffer@1.1.6:
     resolution: {integrity: sha512-NcdALwpXkTm5Zvvbk7owOUSvVvBKDgKP5/ewfXEznmQFfs4ZRmanOeKBTjRVjka3QFoN6XJ+9F3USqfHqTaU5w==}
 
+  is-buffer@2.0.5:
+    resolution: {integrity: sha512-i2R6zNFDwgEHJyQUtJEk0XFi1i0dPFn/oqjK3/vPCcDeJvW5NQ83V8QbicfF1SupOaB0h8ntgBC2YiE7dfyctQ==}
+    engines: {node: '>=4'}
+
   is-bun-module@2.0.0:
     resolution: {integrity: sha512-gNCGbnnnnFAUGKeZ9PdbyeGYJqewpmc2aKHUEMO5nQPWU9lOmv7jcmQIv+qHD8fXW6W7qfuCwX4rY9LNRjXrkQ==}
 
@@ -4076,6 +4113,9 @@ packages:
     resolution: {integrity: sha512-5KoIu2Ngpyek75jXodFvnafB6DJgr3u8uuK0LEZJjrU19DrMD3EVERaR8sjz8CCGgpZvxPl9SuE1GMVPFHx1mw==}
     engines: {node: '>= 0.4'}
 
+  is-node-process@1.2.0:
+    resolution: {integrity: sha512-Vg4o6/fqPxIjtxgUH5QLJhwZ7gW5diGCVlXpuUfELC62CuxM1iHcRe51f2W1FDy04Ai4KJkagKjx3XaqyfRKXw==}
+
   is-number-object@1.1.1:
     resolution: {integrity: sha512-lZhclumE1G6VYD8VHe35wFaIif+CTy5SJIi5+3y4psDgWu4wPDoBhF8NxUOinEc7pHgiTsT6MaBb92rKhhD+Xw==}
     engines: {node: '>= 0.4'}
@@ -4099,6 +4139,10 @@ packages:
   is-shared-array-buffer@1.0.4:
     resolution: {integrity: sha512-ISWac8drv4ZGfwKl5slpHG9OwPNty4jOWPRIhBpxOoD+hqITiwuipOQ2bNthAzwA3B4fIjO4Nln74N0S9byq8A==}
     engines: {node: '>= 0.4'}
+
+  is-stream@2.0.1:
+    resolution: {integrity: sha512-hFoiJiTl63nn+kstHGBtewWSKnQLpyb155KHheA1l39uvtO9nWIop1p3udqPcUd/xbF1VLMO4n7OI6p7RbngDg==}
+    engines: {node: '>=8'}
 
   is-string@1.1.1:
     resolution: {integrity: sha512-BtEeSsoaQjlSPBemMQIrY1MY0uM6vnS1g5fmufYOtnxLGUZM2178PKbhsk7Ffv58IX+ZtcvoGwccYsh0PglkAA==}
@@ -4434,6 +4478,9 @@ packages:
   memory-pager@1.5.0:
     resolution: {integrity: sha512-ZS4Bp4r/Zoeq6+NLJpP+0Zzm0pR8whtGPf1XExKLJBAczGMnSi3It14OiNCStjQjM6NU1okjQGSxgEZN8eBYKg==}
 
+  merge-stream@2.0.0:
+    resolution: {integrity: sha512-abv/qOcuPfk3URPfDzmZU1LKmuw8kT+0nIHvKrKgFrwifol/doWcdA4ZqsWQ8ENrFKkd67Mfpo/LovbIUsbt3w==}
+
   merge2@1.4.1:
     resolution: {integrity: sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==}
     engines: {node: '>= 8'}
@@ -4537,6 +4584,10 @@ packages:
   micromatch@4.0.8:
     resolution: {integrity: sha512-PXwfBhYu0hBCPw8Dn0E+WDYb7af3dSLVWKi3HGv84IdF4TyFoC0ysxFd0Goxw7nSv4T/PzEJQxsYsEiFCKo2BA==}
     engines: {node: '>=8.6'}
+
+  mimic-fn@2.1.0:
+    resolution: {integrity: sha512-OqbOk5oEQeAZ8WXWydlu9HJjz9WVdEIvamMCcXmuqUYjTknH/sqsWvhQ3vgwKFRR1HpjvNBKQ37nbJgYzGqGcg==}
+    engines: {node: '>=6'}
 
   minimatch@10.2.5:
     resolution: {integrity: sha512-MULkVLfKGYDFYejP07QOurDLLQpcjk7Fw+7jXS2R2czRQzR56yHRveU5NDJEOviH+hETZKSkIk5c+T23GjFUMg==}
@@ -4706,6 +4757,10 @@ packages:
     resolution: {integrity: sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==}
     engines: {node: '>=0.10.0'}
 
+  npm-run-path@4.0.1:
+    resolution: {integrity: sha512-S48WzZW777zhNIrn7gxOlISNAqi9ZC/uQFnRdbeIHhZhCA6UqpkOT8T1G7BvfdgP4Er8gF4sUbaS0i7QvIfCWw==}
+    engines: {node: '>=8'}
+
   nth-check@2.1.1:
     resolution: {integrity: sha512-lqjrjmaOoAnWfMmBPL+XNnynZh2+swxiX3WUE0s4yEHI6m+AwrK2UZOimIRl3X/4QctVqS8AiZjFqyOGrMXb/w==}
 
@@ -4757,6 +4812,10 @@ packages:
   once@1.4.0:
     resolution: {integrity: sha512-lNaJgI+2Q5URQBkccEKHTQOPaXdUxnZZElQTZY0MFUAuaEqe1E+Nyvgdz/aIyNi6Z9MzO5dv1H8n58/GELp3+w==}
 
+  onetime@5.1.2:
+    resolution: {integrity: sha512-kbpaSSGJTWdAY5KPVeMOKXSrPtr8C8C7wodJbcsd51jRnmD+GZu8Y0VoU6Dm5Z4vWr0Ig/1NKuWRKf7j5aaYSg==}
+    engines: {node: '>=6'}
+
   oniguruma-parser@0.12.2:
     resolution: {integrity: sha512-6HVa5oIrgMC6aA6WF6XyyqbhRPJrKR02L20+2+zpDtO5QAzGHAUGw5TKQvwi5vctNnRHkJYmjAhRVQF2EKdTQw==}
 
@@ -4766,6 +4825,10 @@ packages:
   optionator@0.9.4:
     resolution: {integrity: sha512-6IpQ7mKUxRcZNLIObR0hz7lxsapSSIYNZJwXPGeF0mTVqGKFIXj1DQcMoT22S3ROcLyY/rz0PWaWZ9ayWmad9g==}
     engines: {node: '>= 0.8.0'}
+
+  os-paths@4.4.0:
+    resolution: {integrity: sha512-wrAwOeXp1RRMFfQY8Sy7VaGVmPocaLwSFOYCGKSyo8qmJ+/yaafCl5BCA1IQZWqFSRBrKDYFeR9d/VyQzfH/jg==}
+    engines: {node: '>= 6.0'}
 
   own-keys@1.0.1:
     resolution: {integrity: sha512-qFOyK5PjiWZd+QQIh+1jhdb9LpxTF0qs7Pm8o5QHYZ0M3vKqSqzsZaEB6oWlxZ+q2sJBMI/Ktgd2N5ZwQoRHfg==}
@@ -5231,6 +5294,10 @@ packages:
   retext@9.0.0:
     resolution: {integrity: sha512-sbMDcpHCNjvlheSgMfEcVrZko3cDzdbe1x/e7G66dFp0Ff7Mldvi2uv6JkJQzdRcvLYE8CA8Oe8siQx8ZOgTcA==}
 
+  retry@0.13.1:
+    resolution: {integrity: sha512-XQBQ3I8W1Cge0Seh+6gjj03LbmRFWuoszgK9ooCpwYIrhhoO80pfq4cUkU5DkknwfOfFteRwlZ56PYOGYyFWdg==}
+    engines: {node: '>= 4'}
+
   reusify@1.1.0:
     resolution: {integrity: sha512-g6QUff04oZpHs0eG5p83rFLhHeV00ug/Yf9nZM6fLeUrPguBTkTQOdpAWWspMh55TZfVQDPaN3NQJfbVRAxdIw==}
     engines: {iojs: '>=1.0.0', node: '>=0.10.0'}
@@ -5360,6 +5427,9 @@ packages:
   sift@17.1.3:
     resolution: {integrity: sha512-Rtlj66/b0ICeFzYTuNvX/EF1igRbbnGSvEyT79McoZa/DeGhMyC5pWKOEsZKnpkqtSeovd5FL/bjHWC3CIIvCQ==}
 
+  signal-exit@3.0.7:
+    resolution: {integrity: sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==}
+
   signal-exit@4.1.0:
     resolution: {integrity: sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw==}
     engines: {node: '>=14'}
@@ -5474,6 +5544,10 @@ packages:
     resolution: {integrity: sha512-vavAMRXOgBVNF6nyEEmL3DBK19iRpDcoIwW+swQ+CbGiu7lju6t+JklA1MHweoWtadgt4ISVUsXLyDq34ddcwA==}
     engines: {node: '>=4'}
 
+  strip-final-newline@2.0.0:
+    resolution: {integrity: sha512-BrpvfNAE3dcvq7ll3xVumzjKjZQ5tI1sEUIKr3Uoks0XUl45St3FlatVqef9prk4jRDzhW6WZg+3bk93y6pLjA==}
+    engines: {node: '>=6'}
+
   strip-json-comments@3.1.1:
     resolution: {integrity: sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==}
     engines: {node: '>=8'}
@@ -5544,6 +5618,10 @@ packages:
 
   thread-stream@3.2.0:
     resolution: {integrity: sha512-zLBvqpwr4Esa0kRjcrzGU6zL25lePWaCLMx0RQFrmteozIfeNdaMLpG5U7PeHzvlFkAWaRKA9/KVW4F60iB+qw==}
+
+  throttleit@2.1.0:
+    resolution: {integrity: sha512-nt6AMGKW1p/70DF/hGBdJB57B8Tspmbp5gfJ8ilhLnt7kkr2ye7hzD6NVG8GGErk2HWF34igrL2CXmNIkzKqKw==}
+    engines: {node: '>=18'}
 
   tiny-inflate@1.0.3:
     resolution: {integrity: sha512-pkY1fj1cKHb2seWDy0B16HeWyczlJA9/WW3u3c4z/NiWDsO3DOU5D7nhTLE9CF0yXv/QZFY7sEJmj24dK+Rrqw==}
@@ -5698,6 +5776,10 @@ packages:
 
   undici-types@7.21.0:
     resolution: {integrity: sha512-w9IMgQrz4O0YN1LtB7K5P63vhlIOvC7opSmouCJ+ZywlPAlO9gIkJ+otk6LvGpAs2wg4econaCz3TvQ9xPoyuQ==}
+
+  undici@6.28.0:
+    resolution: {integrity: sha512-LIY910g9TI13YS95lrMFrs8Rm/u/irgHeTWoKCoteeJ04CUJ92eEfj0rVn+7VKMPBpUPiUoBKfhNyLI23EE/KA==}
+    engines: {node: '>=18.17'}
 
   undici@7.28.0:
     resolution: {integrity: sha512-cRZYrTDwWznlnRiPjggAGxZXanty6M8RV1ff8Wm4LWXBp7/IG8v5DnOm74DtUBp9OONpK75YlPnIjQqX0dBDtA==}
@@ -6071,6 +6153,14 @@ packages:
       utf-8-validate:
         optional: true
 
+  xdg-app-paths@5.5.1:
+    resolution: {integrity: sha512-hI3flOB4PLZIy5prbtTpirobtPE2ZtZ52szO+2mM9Efp6ErM398La+C1lIpNWDfNoQk+6Lsi6nMcCwVB7pxeMQ==}
+    engines: {node: '>= 6.0'}
+
+  xdg-portable@7.3.0:
+    resolution: {integrity: sha512-sqMMuL1rc0FmMBOzCpd0yuy9trqF2yTTVe+E9ogwCSWQCdDEtQUwrZPT6AxqtsFGRNxycgncbP/xmOOSPw5ZUw==}
+    engines: {node: '>= 6.0'}
+
   xss@1.0.15:
     resolution: {integrity: sha512-FVdlVVC67WOIPvfOwhoMETV72f6GbW7aOabBC3WxN/oUdoEMDyLz4OgRv5/gck2ZeNqEQu+Tb0kloovXOfpYVg==}
     engines: {node: '>= 0.10.0'}
@@ -6146,6 +6236,9 @@ packages:
 
   zod@3.25.76:
     resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
+
+  zod@4.1.11:
+    resolution: {integrity: sha512-WPsqwxITS2tzx1bzhIKsEs19ABD5vmCVa4xBo2tq/SrV4RNZtfws1EnCWQXM6yh8bD08a1idvkB5MZSBiZsjwg==}
 
   zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
@@ -6245,14 +6338,14 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@astrojs/vercel@8.2.11(@aws-sdk/credential-provider-web-identity@3.901.0)(astro@5.18.1(@types/node@25.7.0)(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.7.0)(lightningcss@1.32.0)(rollup@4.62.3)(sass@1.77.4)(tsx@4.22.4)(typescript@6.0.3)(yaml@2.9.0))(next@15.5.9(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.77.4))(react@19.2.3)(rollup@4.62.3)':
+  '@astrojs/vercel@8.2.11(@aws-sdk/credential-provider-web-identity@3.901.0)(astro@5.18.1(@types/node@25.7.0)(@vercel/blob@2.6.1)(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.7.0)(lightningcss@1.32.0)(rollup@4.62.3)(sass@1.77.4)(tsx@4.22.4)(typescript@6.0.3)(yaml@2.9.0))(next@15.5.9(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.77.4))(react@19.2.3)(rollup@4.62.3)':
     dependencies:
       '@astrojs/internal-helpers': 0.7.4
       '@vercel/analytics': 1.6.1(next@15.5.9(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.77.4))(react@19.2.3)
       '@vercel/functions': 2.2.13(@aws-sdk/credential-provider-web-identity@3.901.0)
       '@vercel/nft': 0.30.3(rollup@4.62.3)
       '@vercel/routing-utils': 5.3.3
-      astro: 5.18.1(@types/node@25.7.0)(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.7.0)(lightningcss@1.32.0)(rollup@4.62.3)(sass@1.77.4)(tsx@4.22.4)(typescript@6.0.3)(yaml@2.9.0)
+      astro: 5.18.1(@types/node@25.7.0)(@vercel/blob@2.6.1)(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.7.0)(lightningcss@1.32.0)(rollup@4.62.3)(sass@1.77.4)(tsx@4.22.4)(typescript@6.0.3)(yaml@2.9.0)
       esbuild: 0.25.12
       tinyglobby: 0.2.16
     transitivePeerDependencies:
@@ -7578,9 +7671,9 @@ snapshots:
     dependencies:
       minipass: 7.1.3
 
-  '@jhb.software/astro-payload-richtext-lexical@0.3.1(astro@5.18.1(@types/node@25.7.0)(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.7.0)(lightningcss@1.32.0)(rollup@4.62.3)(sass@1.77.4)(tsx@4.22.4)(typescript@6.0.3)(yaml@2.9.0))':
+  '@jhb.software/astro-payload-richtext-lexical@0.3.1(astro@5.18.1(@types/node@25.7.0)(@vercel/blob@2.6.1)(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.7.0)(lightningcss@1.32.0)(rollup@4.62.3)(sass@1.77.4)(tsx@4.22.4)(typescript@6.0.3)(yaml@2.9.0))':
     dependencies:
-      astro: 5.18.1(@types/node@25.7.0)(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.7.0)(lightningcss@1.32.0)(rollup@4.62.3)(sass@1.77.4)(tsx@4.22.4)(typescript@6.0.3)(yaml@2.9.0)
+      astro: 5.18.1(@types/node@25.7.0)(@vercel/blob@2.6.1)(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.7.0)(lightningcss@1.32.0)(rollup@4.62.3)(sass@1.77.4)(tsx@4.22.4)(typescript@6.0.3)(yaml@2.9.0)
 
   '@jhb.software/payload-pages-plugin@0.6.0-beta.3(@payloadcms/ui@3.86.0(@types/react@19.2.0)(monaco-editor@0.52.2)(next@15.5.9(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.77.4))(payload@3.86.0(graphql@16.11.0)(typescript@5.9.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.3))(next@15.5.9(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.77.4))(payload@3.86.0(graphql@16.11.0)(typescript@5.9.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
     dependencies:
@@ -9126,6 +9219,24 @@ snapshots:
       next: 15.5.9(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.77.4)
       react: 19.2.3
 
+  '@vercel/blob@2.6.1':
+    dependencies:
+      '@vercel/oidc': 3.8.1
+      async-retry: 1.3.3
+      is-buffer: 2.0.5
+      is-node-process: 1.2.0
+      throttleit: 2.1.0
+      undici: 6.28.0
+
+  '@vercel/cli-config@0.2.1':
+    dependencies:
+      xdg-app-paths: 5.5.1
+      zod: 4.1.11
+
+  '@vercel/cli-exec@1.0.0':
+    dependencies:
+      execa: 5.1.1
+
   '@vercel/functions@2.2.13(@aws-sdk/credential-provider-web-identity@3.901.0)':
     dependencies:
       '@vercel/oidc': 2.0.2
@@ -9163,6 +9274,12 @@ snapshots:
       ms: 2.1.3
 
   '@vercel/oidc@3.0.5': {}
+
+  '@vercel/oidc@3.8.1':
+    dependencies:
+      '@vercel/cli-config': 0.2.1
+      '@vercel/cli-exec': 1.0.0
+      jose: 5.10.0
 
   '@vercel/routing-utils@5.3.3':
     dependencies:
@@ -9382,12 +9499,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  astro-seo-schema@5.2.0(astro@5.18.1(@types/node@25.7.0)(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.7.0)(lightningcss@1.32.0)(rollup@4.62.3)(sass@1.77.4)(tsx@4.22.4)(typescript@6.0.3)(yaml@2.9.0))(schema-dts@1.1.5):
+  astro-seo-schema@5.2.0(astro@5.18.1(@types/node@25.7.0)(@vercel/blob@2.6.1)(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.7.0)(lightningcss@1.32.0)(rollup@4.62.3)(sass@1.77.4)(tsx@4.22.4)(typescript@6.0.3)(yaml@2.9.0))(schema-dts@1.1.5):
     dependencies:
-      astro: 5.18.1(@types/node@25.7.0)(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.7.0)(lightningcss@1.32.0)(rollup@4.62.3)(sass@1.77.4)(tsx@4.22.4)(typescript@6.0.3)(yaml@2.9.0)
+      astro: 5.18.1(@types/node@25.7.0)(@vercel/blob@2.6.1)(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.7.0)(lightningcss@1.32.0)(rollup@4.62.3)(sass@1.77.4)(tsx@4.22.4)(typescript@6.0.3)(yaml@2.9.0)
       schema-dts: 1.1.5
 
-  astro@5.18.1(@types/node@25.7.0)(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.7.0)(lightningcss@1.32.0)(rollup@4.62.3)(sass@1.77.4)(tsx@4.22.4)(typescript@6.0.3)(yaml@2.9.0):
+  astro@5.18.1(@types/node@25.7.0)(@vercel/blob@2.6.1)(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.7.0)(lightningcss@1.32.0)(rollup@4.62.3)(sass@1.77.4)(tsx@4.22.4)(typescript@6.0.3)(yaml@2.9.0):
     dependencies:
       '@astrojs/compiler': 2.13.1
       '@astrojs/internal-helpers': 0.7.6
@@ -9442,7 +9559,7 @@ snapshots:
       ultrahtml: 1.6.0
       unifont: 0.7.4
       unist-util-visit: 5.1.0
-      unstorage: 1.17.5(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0))
+      unstorage: 1.17.5(@vercel/blob@2.6.1)(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0))
       vfile: 6.0.3
       vite: 6.4.2(@types/node@25.7.0)(jiti@2.7.0)(lightningcss@1.32.0)(sass@1.77.4)(tsx@4.22.4)(yaml@2.9.0)
       vitefu: 1.1.3(vite@6.4.2(@types/node@25.7.0)(jiti@2.7.0)(lightningcss@1.32.0)(sass@1.77.4)(tsx@4.22.4)(yaml@2.9.0))
@@ -9495,6 +9612,10 @@ snapshots:
       synckit: 0.11.12
 
   async-function@1.0.0: {}
+
+  async-retry@1.3.3:
+    dependencies:
+      retry: 0.13.1
 
   async-sema@3.1.1: {}
 
@@ -10403,6 +10524,18 @@ snapshots:
 
   events@3.3.0: {}
 
+  execa@5.1.1:
+    dependencies:
+      cross-spawn: 7.0.6
+      get-stream: 6.0.1
+      human-signals: 2.1.0
+      is-stream: 2.0.1
+      merge-stream: 2.0.0
+      npm-run-path: 4.0.1
+      onetime: 5.1.2
+      signal-exit: 3.0.7
+      strip-final-newline: 2.0.0
+
   expand-tilde@2.0.2:
     dependencies:
       homedir-polyfill: 1.0.3
@@ -10562,6 +10695,8 @@ snapshots:
     dependencies:
       dunder-proto: 1.0.1
       es-object-atoms: 1.1.1
+
+  get-stream@6.0.1: {}
 
   get-symbol-description@1.1.0:
     dependencies:
@@ -10799,6 +10934,8 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  human-signals@2.1.0: {}
+
   ieee754@1.2.1: {}
 
   ignore@5.3.2: {}
@@ -10870,6 +11007,8 @@ snapshots:
 
   is-buffer@1.1.6: {}
 
+  is-buffer@2.0.5: {}
+
   is-bun-module@2.0.0:
     dependencies:
       semver: 7.8.0
@@ -10925,6 +11064,8 @@ snapshots:
 
   is-negative-zero@2.0.3: {}
 
+  is-node-process@1.2.0: {}
+
   is-number-object@1.1.1:
     dependencies:
       call-bound: 1.0.4
@@ -10946,6 +11087,8 @@ snapshots:
   is-shared-array-buffer@1.0.4:
     dependencies:
       call-bound: 1.0.4
+
+  is-stream@2.0.1: {}
 
   is-string@1.1.1:
     dependencies:
@@ -11157,9 +11300,9 @@ snapshots:
 
   lru-cache@11.3.6: {}
 
-  lucide-astro@0.544.0(astro@5.18.1(@types/node@25.7.0)(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.7.0)(lightningcss@1.32.0)(rollup@4.62.3)(sass@1.77.4)(tsx@4.22.4)(typescript@6.0.3)(yaml@2.9.0)):
+  lucide-astro@0.544.0(astro@5.18.1(@types/node@25.7.0)(@vercel/blob@2.6.1)(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.7.0)(lightningcss@1.32.0)(rollup@4.62.3)(sass@1.77.4)(tsx@4.22.4)(typescript@6.0.3)(yaml@2.9.0)):
     dependencies:
-      astro: 5.18.1(@types/node@25.7.0)(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.7.0)(lightningcss@1.32.0)(rollup@4.62.3)(sass@1.77.4)(tsx@4.22.4)(typescript@6.0.3)(yaml@2.9.0)
+      astro: 5.18.1(@types/node@25.7.0)(@vercel/blob@2.6.1)(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.7.0)(lightningcss@1.32.0)(rollup@4.62.3)(sass@1.77.4)(tsx@4.22.4)(typescript@6.0.3)(yaml@2.9.0)
 
   lucide@1.3.0: {}
 
@@ -11344,6 +11487,8 @@ snapshots:
   memoize-one@6.0.0: {}
 
   memory-pager@1.5.0: {}
+
+  merge-stream@2.0.0: {}
 
   merge2@1.4.1: {}
 
@@ -11581,6 +11726,8 @@ snapshots:
       braces: 3.0.3
       picomatch: 2.3.2
 
+  mimic-fn@2.1.0: {}
+
   minimatch@10.2.5:
     dependencies:
       brace-expansion: 5.0.6
@@ -11718,6 +11865,10 @@ snapshots:
 
   normalize-path@3.0.0: {}
 
+  npm-run-path@4.0.1:
+    dependencies:
+      path-key: 3.1.1
+
   nth-check@2.1.1:
     dependencies:
       boolbase: 1.0.0
@@ -11780,6 +11931,10 @@ snapshots:
     dependencies:
       wrappy: 1.0.2
 
+  onetime@5.1.2:
+    dependencies:
+      mimic-fn: 2.1.0
+
   oniguruma-parser@0.12.2: {}
 
   oniguruma-to-es@4.3.6:
@@ -11796,6 +11951,8 @@ snapshots:
       prelude-ls: 1.2.1
       type-check: 0.4.0
       word-wrap: 1.2.5
+
+  os-paths@4.4.0: {}
 
   own-keys@1.0.1:
     dependencies:
@@ -12344,6 +12501,8 @@ snapshots:
       retext-stringify: 4.0.0
       unified: 11.0.5
 
+  retry@0.13.1: {}
+
   reusify@1.1.0: {}
 
   rollup@4.62.3:
@@ -12574,6 +12733,8 @@ snapshots:
 
   sift@17.1.3: {}
 
+  signal-exit@3.0.7: {}
+
   signal-exit@4.1.0: {}
 
   simple-wcswidth@1.1.2: {}
@@ -12711,6 +12872,8 @@ snapshots:
 
   strip-bom@3.0.0: {}
 
+  strip-final-newline@2.0.0: {}
+
   strip-json-comments@3.1.1: {}
 
   strip-json-comments@5.0.3: {}
@@ -12776,6 +12939,8 @@ snapshots:
   thread-stream@3.2.0:
     dependencies:
       real-require: 0.2.0
+
+  throttleit@2.1.0: {}
 
   tiny-inflate@1.0.3: {}
 
@@ -12936,6 +13101,8 @@ snapshots:
   undici-types@7.21.0:
     optional: true
 
+  undici@6.28.0: {}
+
   undici@7.28.0: {}
 
   unified@11.0.5:
@@ -13024,7 +13191,7 @@ snapshots:
       '@unrs/resolver-binding-win32-ia32-msvc': 1.11.1
       '@unrs/resolver-binding-win32-x64-msvc': 1.11.1
 
-  unstorage@1.17.5(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0)):
+  unstorage@1.17.5(@vercel/blob@2.6.1)(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0)):
     dependencies:
       anymatch: 3.1.3
       chokidar: 5.0.0
@@ -13035,6 +13202,7 @@ snapshots:
       ofetch: 1.5.1
       ufo: 1.6.4
     optionalDependencies:
+      '@vercel/blob': 2.6.1
       '@vercel/functions': 3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0)
 
   uri-js@4.4.1:
@@ -13290,6 +13458,15 @@ snapshots:
 
   ws@8.21.1: {}
 
+  xdg-app-paths@5.5.1:
+    dependencies:
+      os-paths: 4.4.0
+      xdg-portable: 7.3.0
+
+  xdg-portable@7.3.0:
+    dependencies:
+      os-paths: 4.4.0
+
   xss@1.0.15:
     dependencies:
       commander: 2.20.3
@@ -13357,5 +13534,7 @@ snapshots:
       zod: 3.25.76
 
   zod@3.25.76: {}
+
+  zod@4.1.11: {}
 
   zwitch@2.0.4: {}

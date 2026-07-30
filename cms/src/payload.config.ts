@@ -1,5 +1,6 @@
 import { alternatePathsField, payloadPagesPlugin } from '@jhb.software/payload-pages-plugin'
-import { hetznerStorage } from '@joneslloyd/payload-storage-hetzner'
+import { cloudStoragePlugin } from '@payloadcms/plugin-cloud-storage'
+import { vercelBlobStorage } from './adapters/vercelBlob'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { resendAdapter } from '@payloadcms/email-resend'
 import { seoPlugin } from '@payloadcms/plugin-seo'
@@ -206,29 +207,19 @@ export default buildConfig({
       ],
       interfaceName: 'SeoMetadata',
     }),
-    ...(process.env.HETZNER_BUCKET &&
-    process.env.HETZNER_ACCESS_KEY_ID &&
-    process.env.HETZNER_SECRET_ACCESS_KEY
+    ...(process.env.BLOB_READ_WRITE_TOKEN
       ? [
-          hetznerStorage({
-            // ## JUST FOR TESTING, REMOVE BEFORE PUBLISHING:
-            disableLocalStorage: false,
-            // ##
+          cloudStoragePlugin({
             collections: {
               media: {
-                // serve files directly from hetzner object storage to improve performance
+                prefix: 'media',
                 disablePayloadAccessControl: true,
+                disableLocalStorage: true,
+                adapter: vercelBlobStorage({
+                  prefix: 'media',
+                }),
               },
             },
-            bucket: process.env.HETZNER_BUCKET,
-            region: 'nbg1',
-            credentials: {
-              accessKeyId: process.env.HETZNER_ACCESS_KEY_ID,
-              secretAccessKey: process.env.HETZNER_SECRET_ACCESS_KEY,
-            },
-            cacheControl: 'public, max-age=2592000', // max age 30 days
-            clientUploads: false,
-            acl: 'public-read',
           }),
         ]
       : []),

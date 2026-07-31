@@ -14,11 +14,13 @@ const { title, subtitle, backgroundImage, primaryCTA, secondaryCTA } = Astro.pro
   class="relative flex h-[960px] min-h-[80vh] flex-col items-center justify-center overflow-hidden px-5 pt-32 pb-24 text-white"
 >
   {/* Background Image with Overlay */}
-  {backgroundImage && typeof backgroundImage === 'object' && backgroundImage?.filename && (
+  {backgroundImage && typeof backgroundImage === 'object' && backgroundImage?.filename ? (
     <div class="absolute inset-0 z-0">
       <Img image={backgroundImage as Media} size="original" class="h-full w-full object-cover" />
       <div class="absolute inset-0 bg-black/20" />
     </div>
+  ) : (
+    <div class="absolute inset-0 z-0 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900" />
   )}
 
   <div class="relative z-10 container mx-auto flex flex-col items-center space-y-7.5 text-center">

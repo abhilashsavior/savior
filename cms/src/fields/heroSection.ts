@@ -22,7 +22,7 @@ export function heroSection(): Field {
         name: 'backgroundImage',
         type: 'upload',
         relationTo: 'media',
-        required: true,
+        required: false,
       },
       {
         name: 'primaryCTA',

@@ -1,19 +1,13 @@
 import { put, del } from '@vercel/blob'
 
-function getStoreInfo(): { storeId: string; region: string } | null {
-  const token = process.env.BLOB_READ_WRITE_TOKEN
-  if (!token) return null
-  const match = token.match(/^vercel_blob_rw_([^_]+)_([^_]+)_/)
-  if (match) {
-    return { storeId: match[1], region: match[2] }
-  }
-  return null
+function getStoreId(): string | null {
+  return process.env.BLOB_STORE_ID || null
 }
 
 function buildBlobUrl(pathname: string): string | null {
-  const info = getStoreInfo()
-  if (!info) return null
-  return `https://${info.storeId}.${info.region}.blob.vercel-storage.com/${pathname}`
+  const storeId = getStoreId()
+  if (!storeId) return null
+  return `https://${storeId}.private.blob.vercel-storage.com/${pathname}`
 }
 
 export const vercelBlobStorage = (options?: { prefix?: string }) => {
@@ -46,15 +40,12 @@ export const vercelBlobStorage = (options?: { prefix?: string }) => {
 
         if (!url) return
 
-        await del(url, {
-          token: process.env.BLOB_READ_WRITE_TOKEN,
-        })
+        await del(url)
       },
       handleUpload: async ({ file }: { file: any }) => {
         const pathname = resolvedPrefix ? `${resolvedPrefix}/${file.filename}` : file.filename
 
         const blob = await put(pathname, file.buffer, {
-          token: process.env.BLOB_READ_WRITE_TOKEN,
           contentType: file.mimeType,
           access: 'public',
           addRandomSuffix: false,

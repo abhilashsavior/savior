@@ -35,8 +35,7 @@ import PricingSectionBlock from '@/blocks/PricingSectionBlock'
 import FaqSectionBlock from '@/blocks/FaqSectionBlock'
 import { heroSection } from '@/fields/heroSection'
 import { anyone } from '@/shared/access/anyone'
-import type { Access, AccessArgs } from 'payload'
-import type { User } from '../payload-types'
+import type { Access } from 'payload'
 import { CollectionGroups } from '@/shared/CollectionGroups'
 import { PageCollectionConfig } from '@jhb.software/payload-pages-plugin'
 
@@ -59,15 +58,7 @@ import { PageCollectionConfig } from '@jhb.software/payload-pages-plugin'
 //   return false
 // }
 
-const canReadPage: Access = ({ req: { user } }) => {
-  if (user) return true
-
-  return {
-    public: {
-      equals: true,
-    },
-  }
-}
+const canReadPage: Access = () => true
 
 const Pages: PageCollectionConfig = {
   slug: 'pages',

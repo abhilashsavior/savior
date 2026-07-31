@@ -48,7 +48,8 @@ export const vercelBlobStorage = (options?: { prefix?: string }) => {
         const blob = await put(pathname, file.buffer, {
           contentType: file.mimeType,
           access: 'public',
-          addRandomSuffix: false,
+          addRandomSuffix: true,
+          allowOverwrite: true,
         })
 
         return {

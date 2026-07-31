@@ -269,7 +269,7 @@ export interface Page {
 export interface HeroSection {
   title: string;
   subtitle: string;
-  backgroundImage: string | Media;
+  backgroundImage?: (string | null) | Media;
   primaryCTA?: {
     label?: string | null;
     link?: (string | null) | Page;

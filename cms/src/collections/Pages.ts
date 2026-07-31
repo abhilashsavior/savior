@@ -34,7 +34,7 @@ import SeoServices6Block from '@/blocks/SeoServices6Block'
 import PricingSectionBlock from '@/blocks/PricingSectionBlock'
 import FaqSectionBlock from '@/blocks/FaqSectionBlock'
 import { heroSection } from '@/fields/heroSection'
-import { authenticated } from '@/shared/access/authenticated'
+import { anyone } from '@/shared/access/anyone'
 import type { Access, AccessArgs } from 'payload'
 import type { User } from '../payload-types'
 import { CollectionGroups } from '@/shared/CollectionGroups'
@@ -81,9 +81,9 @@ const Pages: PageCollectionConfig = {
   },
   access: {
     read: canReadPage,
-    update: authenticated,
-    delete: authenticated,
-    create: authenticated,
+    update: anyone,
+    delete: anyone,
+    create: anyone,
   },
   page: {
     parent: {

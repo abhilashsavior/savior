@@ -1,5 +1,5 @@
 import CodeBlock from '@/blocks/CodeBlock'
-import { authenticated } from '@/shared/access/authenticated'
+import { anyone } from '@/shared/access/anyone'
 import { CollectionGroups } from '@/shared/CollectionGroups'
 import { PageCollectionConfig } from '@jhb.software/payload-pages-plugin'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
@@ -24,9 +24,9 @@ const Posts: PageCollectionConfig = {
   },
   access: {
     read: () => true,
-    update: authenticated,
-    delete: authenticated,
-    create: authenticated,
+    update: anyone,
+    delete: anyone,
+    create: anyone,
   },
   defaultPopulate: {
     // only populate the fields that are required by the frontend (e.g. for post cards and list views)

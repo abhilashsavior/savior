@@ -1,4 +1,4 @@
-import { authenticated } from '@/shared/access/authenticated'
+import { anyone } from '@/shared/access/anyone'
 import { CollectionGroups } from '@/shared/CollectionGroups'
 import type { CollectionConfig } from 'payload'
 
@@ -10,9 +10,9 @@ const Categories: CollectionConfig = {
   },
   access: {
     read: () => true,
-    create: authenticated,
-    update: authenticated,
-    delete: authenticated,
+    create: anyone,
+    update: anyone,
+    delete: anyone,
   },
   fields: [
     {

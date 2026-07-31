@@ -1,4 +1,4 @@
-import { authenticated } from '@/shared/access/authenticated'
+import { anyone } from '@/shared/access/anyone'
 import { CollectionGroups } from '@/shared/CollectionGroups'
 import { CollectionConfig } from 'payload'
 
@@ -42,10 +42,10 @@ export const Media: CollectionConfig = {
     adminThumbnail: 'sm',
   },
   access: {
-    read: authenticated,
-    update: authenticated,
-    delete: authenticated,
-    create: authenticated,
+    read: anyone,
+    update: anyone,
+    delete: anyone,
+    create: anyone,
   },
   fields: [
     // TODO: use the alt-text-plugin: https://www.npmjs.com/package/@jhb.software/payload-alt-text-plugin

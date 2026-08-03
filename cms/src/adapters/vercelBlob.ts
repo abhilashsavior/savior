@@ -4,10 +4,11 @@ function getStoreId(): string | null {
   return process.env.BLOB_STORE_ID || null
 }
 
-function buildBlobUrl(pathname: string): string | null {
+function buildBlobUrl(pathname: string, access: 'private' | 'public' = 'public'): string | null {
   const storeId = getStoreId()
   if (!storeId) return null
-  return `https://${storeId}.private.blob.vercel-storage.com/${pathname}`
+  const domain = access === 'private' ? '.private' : '.public'
+  return `https://${storeId}${domain}.blob.vercel-storage.com/${pathname}`
 }
 
 export const vercelBlobStorage = (options?: { prefix?: string }) => {
@@ -26,14 +27,14 @@ export const vercelBlobStorage = (options?: { prefix?: string }) => {
         }
 
         const pathname = resolvedPrefix ? `${resolvedPrefix}/${filename}` : filename
-        return buildBlobUrl(pathname) || ''
+        return buildBlobUrl(pathname, 'public') || ''
       },
       handleDelete: async ({ doc, filename }: { doc: any; filename: string }) => {
         let url: string | null = null
 
         if (filename) {
           const pathname = resolvedPrefix ? `${resolvedPrefix}/${filename}` : filename
-          url = buildBlobUrl(pathname)
+          url = buildBlobUrl(pathname, 'public')
         } else if (doc?.url) {
           url = doc.url
         }

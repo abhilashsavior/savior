@@ -40,7 +40,9 @@ export const vercelBlobStorage = (options?: { prefix?: string }) => {
 
         if (!url) return
 
-        await del(url)
+        await del(url, {
+          token: process.env.BLOB_READ_WRITE_TOKEN,
+        })
       },
       handleUpload: async ({ file }: { file: any }) => {
         const pathname = resolvedPrefix ? `${resolvedPrefix}/${file.filename}` : file.filename
@@ -50,6 +52,7 @@ export const vercelBlobStorage = (options?: { prefix?: string }) => {
           access: 'public',
           addRandomSuffix: true,
           allowOverwrite: true,
+          token: process.env.BLOB_READ_WRITE_TOKEN,
         })
 
         return {

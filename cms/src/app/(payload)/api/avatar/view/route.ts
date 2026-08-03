@@ -15,11 +15,16 @@ export async function GET(request: NextRequest) {
     return new NextResponse('Not found', { status: 404 })
   }
 
+  const headers: Record<string, string> = {
+    'Cache-Control': 'private, no-cache',
+    'X-Content-Type-Options': 'nosniff',
+  }
+
+  if (result.blob.contentType) {
+    headers['Content-Type'] = result.blob.contentType
+  }
+
   return new NextResponse(result.stream, {
-    headers: {
-      'Cache-Control': 'private, no-cache',
-      'Content-Type': result.blob.contentType,
-      'X-Content-Type-Options': 'nosniff',
-    },
+    headers,
   })
 }

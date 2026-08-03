@@ -177,3 +177,5 @@ dist
 /.unlighthouse
 .vscode/terminals.json
 **/.vercel/output
+.vercel
+.env*

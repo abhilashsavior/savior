@@ -17,7 +17,7 @@
     "postinstall": "node scripts/apply-patches.cjs"
   },
   "dependencies": {
-    "@jhb.software/payload-pages-plugin": "0.6.0-beta.3",
+    "@jhb.software/payload-pages-plugin": "0.8.0",
     "@joneslloyd/payload-storage-hetzner": "^3.55.2",
     "@payloadcms/db-mongodb": "3.86.0",
     "@payloadcms/email-resend": "3.86.0",

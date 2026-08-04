@@ -9,7 +9,11 @@ export const Media: CollectionConfig = {
     defaultColumns: ['filename', 'title', 'alt', 'createdAt', 'updatedAt'],
   },
   upload: {
-    staticDir: 'media',
+    ...(process.env.STORED_MEDIA_PROVIDER === 'vercel-blob'
+      ? {}
+      : {
+          staticDir: 'media',
+        }),
     mimeTypes: ['image/*', 'application/pdf'],
     imageSizes: [
       {
@@ -33,7 +37,6 @@ export const Media: CollectionConfig = {
         width: 2560,
       },
       {
-        // optimal size for an Open Graph (OG) image
         name: 'og',
         width: 1200,
         height: 630,
@@ -48,7 +51,6 @@ export const Media: CollectionConfig = {
     create: anyone,
   },
   fields: [
-    // TODO: use the alt-text-plugin: https://www.npmjs.com/package/@jhb.software/payload-alt-text-plugin
     {
       name: 'alt',
       label: 'Alt Text',

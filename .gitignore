@@ -179,3 +179,4 @@ dist
 **/.vercel/output
 .vercel
 .env*
+cms/media/*.png 

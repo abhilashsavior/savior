@@ -1,8 +1,8 @@
-import { isAdmin } from '@/shared/access/field/isAdmin'
-import { isAdmin as isAdminAccess } from '@/shared/access/isAdmin'
-import { isSelfOrAdmin } from '@/shared/access/isSelfOrAdmin'
+import { anyone } from '@/shared/access/anyone'
 import { CollectionGroups } from '@/shared/CollectionGroups'
-import type { CollectionConfig } from 'payload'
+import type { CollectionConfig, FieldAccess } from 'payload'
+
+const fieldAccess: FieldAccess = () => true
 
 export const Users: CollectionConfig = {
   slug: 'users',
@@ -14,10 +14,10 @@ export const Users: CollectionConfig = {
   },
   auth: true,
   access: {
-    read: isSelfOrAdmin,
-    update: isSelfOrAdmin,
-    delete: isAdminAccess,
-    create: isAdminAccess,
+    read: anyone,
+    update: anyone,
+    delete: anyone,
+    create: anyone,
   },
   fields: [
     // Email field is added by default
@@ -40,8 +40,8 @@ export const Users: CollectionConfig = {
       defaultValue: ['editor'],
       required: true,
       access: {
-        create: isAdmin,
-        update: isAdmin,
+        create: fieldAccess,
+        update: fieldAccess,
       },
       options: [
         // Editors can read, create, update and delete content

@@ -1,5 +1,4 @@
-import { isAdmin } from '@/shared/access/isAdmin'
-import { isSelfOrAdmin } from '@/shared/access/isSelfOrAdmin'
+import { anyone } from '@/shared/access/anyone'
 import { CollectionGroups } from '@/shared/CollectionGroups'
 import { CollectionConfig } from 'payload'
 
@@ -18,10 +17,10 @@ const ApiKeys: CollectionConfig = {
     disableLocalStrategy: true,
   },
   access: {
-    create: isAdmin,
-    read: isSelfOrAdmin,
-    update: isAdmin,
-    delete: isAdmin,
+    create: anyone,
+    read: anyone,
+    update: anyone,
+    delete: anyone,
   },
   fields: [
     {

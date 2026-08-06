@@ -89,11 +89,6 @@ export default buildConfig({
     defaultLocale: 'de',
   },
   admin: {
-    user: Users.slug,
-    autoLogin: {
-      email: 'admin@admin.com',
-      password: 'password',
-    },
     importMap: {
       baseDir: path.resolve(dirname),
     },

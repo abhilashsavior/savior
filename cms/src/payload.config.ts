@@ -12,6 +12,7 @@ import sharp from 'sharp'
 import { fileURLToPath } from 'url'
 import CodeBlock from './blocks/CodeBlock'
 import ApiKeys from './collections/ApiKeys'
+import Avatar from './collections/Avatar'
 import Authors from './collections/Authors'
 import CaseStudies from './collections/CaseStudies'
 import Categories from './collections/Categories'
@@ -46,6 +47,7 @@ export const collections: CollectionConfig[] = [
 
   // Data Collections
   Media,
+  Avatar,
   Categories,
   Tags,
   CaseStudies,
@@ -229,16 +231,15 @@ export default buildConfig({
     ...(process.env.STORED_MEDIA_PROVIDER === 'vercel-blob'
       ? [
           cloudStoragePlugin({
-            collections: {
-              media: {
-                prefix: 'media',
-                disablePayloadAccessControl: true,
-                disableLocalStorage: true,
-                adapter: vercelBlobStorage({
+              collections: {
+                media: {
                   prefix: 'media',
-                }),
+                  disableLocalStorage: true,
+                  adapter: vercelBlobStorage({
+                    prefix: 'media',
+                  }),
+                },
               },
-            },
           }),
         ]
       : []),

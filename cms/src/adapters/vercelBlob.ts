@@ -1,10 +1,10 @@
-import { put, del } from '@vercel/blob'
+import { put, del, get } from '@vercel/blob'
 
 function getStoreId(): string | null {
   return process.env.BLOB_STORE_ID || null
 }
 
-function buildBlobUrl(pathname: string, access: 'private' | 'public' = 'public'): string | null {
+function buildBlobUrl(pathname: string, access: 'private' | 'public' = 'private'): string | null {
   const storeId = getStoreId()
   if (!storeId) return null
   const domain = access === 'private' ? '.private' : '.public'
@@ -27,14 +27,14 @@ export const vercelBlobStorage = (options?: { prefix?: string }) => {
         }
 
         const pathname = resolvedPrefix ? `${resolvedPrefix}/${filename}` : filename
-        return buildBlobUrl(pathname, 'public') || ''
+        return buildBlobUrl(pathname, 'private') || ''
       },
       handleDelete: async ({ doc, filename }: { doc: any; filename: string }) => {
         let url: string | null = null
 
         if (filename) {
           const pathname = resolvedPrefix ? `${resolvedPrefix}/${filename}` : filename
-          url = buildBlobUrl(pathname, 'public')
+          url = buildBlobUrl(pathname, 'private')
         } else if (doc?.url) {
           url = doc.url
         }
@@ -50,21 +50,51 @@ export const vercelBlobStorage = (options?: { prefix?: string }) => {
 
         const blob = await put(pathname, file.buffer, {
           contentType: file.mimeType,
-          access: 'public',
+          access: 'private',
           addRandomSuffix: true,
-          allowOverwrite: true,
           token: process.env.BLOB_READ_WRITE_TOKEN,
         })
 
         return {
-          filename: file.filename,
+          filename: blob.pathname.split('/').pop() || file.filename,
           filesize: file.filesize,
           mimeType: file.mimeType,
           url: blob.url,
         }
       },
-      staticHandler: async (_req: any, _args: any) => {
-        return new Response('Not implemented', { status: 501 })
+      staticHandler: async (_req: any, args: any) => {
+        const { filename, prefix } = args.params || {}
+        if (!filename) {
+          return new Response('Missing filename', { status: 400 })
+        }
+
+        const pathname = prefix ? `${prefix}/${filename}` : filename
+
+        try {
+          const result = await get(pathname, {
+            access: 'private',
+            token: process.env.BLOB_READ_WRITE_TOKEN,
+          })
+
+          if (result === null) {
+            return new Response('Not found', { status: 404 })
+          }
+
+          const headers: Record<string, string> = {
+            'Cache-Control': 'private, no-cache',
+            'X-Content-Type-Options': 'nosniff',
+          }
+
+          if (result.blob.contentType) {
+            headers['Content-Type'] = result.blob.contentType
+          }
+
+          return new Response(result.stream, {
+            headers,
+          })
+        } catch (err) {
+          return new Response('Not found', { status: 404 })
+        }
       },
     }
   }
